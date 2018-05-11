@@ -21,7 +21,6 @@ const bindingAccount = resolve => require(['@/components/loginRegister/bindingAc
 const forgetPass = resolve => require(['@/components/loginRegister/forgetPass.vue'], resolve);
 const detail = resolve => require(['@/components/detail/detail.vue'], resolve);
 
-
 Vue.use(Router);
 export default new Router({
   routes: [
