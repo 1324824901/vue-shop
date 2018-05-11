@@ -1,3 +1,7 @@
+
+// npm run build  是跑本文件的配置
+// 你本地测试好没问题  编译发布的时候就跑生产环境这个配置
+
 'use strict'
 const path = require('path')
 const utils = require('./utils')

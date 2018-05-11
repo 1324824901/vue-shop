@@ -1,3 +1,6 @@
+// 这个文件是公共的配置信息
+
+
 'use strict'
 var webpack = require("webpack")
 const path = require('path')

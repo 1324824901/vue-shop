@@ -1,3 +1,6 @@
+// npm run dev-build 是跑本文件的配置
+// 这个是开发环境配置信息
+
 'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
