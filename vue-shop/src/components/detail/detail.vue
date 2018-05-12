@@ -33,13 +33,78 @@
 
           <div class="detailMain1 aaasss">
             <p class="detailMainP wwww">{{titlePriceSales.goods_name}}</p>
-            <div class="detailMainF wwww">
+            <div class="detailMainF wwww"   @click="selectionSpecificationShow1()">
                 <div class="detailMainImg">
                     <img src="../../assets/mIcon/icon_danbaoren.png" alt="">
                 </div>
                 <p>分享赚钱</p>
             </div>
           </div>
+           <!-- 底部弹框分享 分享赚钱-->
+            <div class="detailMain1s_selection1">
+                <div class="detailMain1s_selection1Btn1"  @click="selectionSpecificationHide1()">分享到</div>
+                <ul class="sharePl">
+                  <li>
+                    <div class="sharePlus">
+                      <div>
+                        <img src="../../assets/mIcon/plus.png" alt="">
+                      </div>
+                    </div>
+                    <div class="shareP">加价分享</div>
+                  </li>
+                  <li>
+                    <div class="sharePlus">
+                      <div>
+                        <img src="../../assets/mIcon/photograph.png" alt="">
+                      </div>
+                    </div>
+                    <div class="shareP">图片分享</div>
+                  </li>
+                  <li>
+                    <div class="sharePlus">
+                      <div>
+                        <img src="../../assets/mIcon/share.png" alt="">
+                      </div>
+                    </div>
+                    <div class="shareP">分享链接</div>
+                  </li>
+                </ul>
+                <ul class="sharePl2">
+                  <li>
+                    <div class="sharePlus2">
+                        <img src="../../assets/mIcon/QQ.png" alt="">
+                    </div>
+                    <div class="shareP2">QQ</div>
+                  </li>
+                  <li>
+                    <div class="sharePlus2">
+                        <img src="../../assets/mIcon/xinlang.png" alt="">
+                    </div>
+                    <div class="shareP2">新浪</div>
+                  </li>
+                  <li>
+                    <div class="sharePlus2">
+                        <img src="../../assets/mIcon/qqKongjian.png" alt="">
+                    </div>
+                    <div class="shareP2">QQ空间</div>
+                  </li>
+                  <li>
+                    <div class="sharePlus2">
+                        <img src="../../assets/mIcon/weixin1.png" alt="">
+                    </div>
+                    <div class="shareP2">微信好友</div>
+                  </li>
+                  <li>
+                    <div class="sharePlus2">
+                        <img src="../../assets/mIcon/weixinFriend.png" alt="">
+                    </div>
+                    <div class="shareP2">微信朋友圈</div>
+                  </li>
+                </ul>
+                <div class="detailMain1s_selection1Btn"  @click="selectionSpecificationHide1()">取消</div>
+            </div>
+          <div class="detailMain1s_selection" @click="selectionSpecificationHide1()"></div>
+            <!-- ============================================= -->
 
           <div class="detailMain2">
               <p>供货价: {{titlePriceSales.store_price}}</p>
@@ -53,7 +118,7 @@
               <span class="detailMain3s specification">选择规格</span>
               <span class="detailMain3Img"><img src="../../assets/mIcon/title_back_normal.png" alt=""></span>
           </div>
-      
+           <!-- 底部弹框分享选择规格 -->
           <div class="detailMain3s_selection1">
               <div class="detailMain3s_selection1Img"  @click="selectionSpecificationHide()">
                 <img src="../../assets/mIcon/icon_market_aihao.png" alt="">
@@ -70,7 +135,7 @@
               <button type="submit" class="detailMain3s_selection1Btn">确定</button>  
             </div>
           <div class="detailMain3s_selection" @click="selectionSpecificationHide()"></div>
-
+          <!-- ============================== -->
           <div class="detailMain4 aaasss">
               <span>商品评价（{{evaluation.evaluateSum}}）</span>
               <span>查看评价</span>
@@ -193,6 +258,15 @@ export default {
         $(".detailMain3s_selection").animate({top:"19.2rem"},200);
         $(".detailMain3s_selection1").animate({bottom:"-13.5rem"},200);
       },
+    //分享赚钱
+    selectionSpecificationShow1: function() {
+        $(".detailMain1s_selection").animate({top:"0"},200);
+        $(".detailMain1s_selection1").animate({bottom:"0"},200);
+      },
+      selectionSpecificationHide1: function() {
+        $(".detailMain1s_selection").animate({top:"19.2rem"},200);
+        $(".detailMain1s_selection1").animate({bottom:"-8.99rem"},200);
+      },
   }
 };
 </script>
@@ -302,6 +376,7 @@ export default {
   .detailMain2 {
     height: 2.4rem;
     border-bottom: 0.12rem solid #f2f2f2;
+    
     p {
       margin-top: 0.06rem;
       line-height: 1.3rem;
@@ -489,7 +564,121 @@ export default {
     width: 100%;
     top: 26rem;
   }
-    .detailMain3s_selection {
+
+  .detailMain1s_selection1{
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    background: #fff;
+    bottom: -8.99rem;
+    .detailMain1s_selection1Btn1{
+      height: 1.54rem;
+      line-height: 1.54rem;
+      text-align: center;
+      font-size: .35rem;
+      color: #666666;
+    }
+    .detailMain1s_selection1Btn{
+      height: 1.78rem;
+      line-height: 1.78rem;
+      text-align: center;
+      font-size: .51rem;
+      color: #666666;
+    }
+
+    .sharePl{
+      height: 3.26rem;
+
+      li{
+        margin-top: .54rem;
+        width: 2.7rem;
+        float: left;
+        .sharePlus{
+          width: 1.44rem;
+          height: 1.44rem;
+          background: #ebebeb;
+          border-radius: 14%;
+          margin: auto;
+          margin-bottom: .33rem;
+          div{
+            width: .6rem;
+            height: .6rem;
+            padding-top: .42rem;
+            padding-left: .42rem;
+          }
+        }
+        .shareP{
+          font-size: .34rem;
+          color: #616161;
+          text-align: center;
+        }
+      }
+    }
+    .sharePl2{
+        height: 2.12rem;
+        margin-top: .3rem;
+      li{
+        position: absolute;
+        .sharePlus2{
+          margin: auto;
+        }
+        .shareP2{
+          margin-top: .53rem;
+          text-align: center;
+          font-size: .31rem;
+        }
+      }
+      :nth-child(1){
+        left: .82rem;
+        .sharePlus2{
+            width: .52rem;
+            height: .53rem;
+        }
+      }
+       :nth-child(2){
+        left: 2.5rem;
+        .sharePlus2{
+            width: .64rem;
+            height: .53rem;
+        }
+      }
+       :nth-child(3){
+         left: 4.5rem;
+        .sharePlus2{
+            width: .6rem;
+            height: .6rem;
+        }
+        .shareP2{
+          margin-top: .46rem;
+        }
+      }
+       :nth-child(4){
+         right: 2.8rem;
+        .sharePlus2{
+            width: .63rem;
+            height: .53rem;
+        }
+      }
+       :nth-child(5){
+         right: .29rem;
+        .sharePlus2{
+            width: .62rem;
+            height: .62rem;
+        }
+        .shareP2{
+          margin-top: .44rem;
+        }
+      }
+    }
+    // .<li>
+    //                 <div class="sharePlus2">
+    //                     <img src="../../assets/mIcon/share.png" alt="">
+    //                 </div>
+    //                 <div class="shareP2">QQ</div>
+    //               </li>
+    
+  }
+    .detailMain3s_selection,.detailMain1s_selection{
       position: fixed;
       z-index: 998;
       width: 100%;
