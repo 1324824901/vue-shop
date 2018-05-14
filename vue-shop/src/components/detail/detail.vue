@@ -209,7 +209,6 @@ $(function() {
     var $offsettop = $(".detailMain .aaasss")
       .eq($(this).index())
       .offset().top;
-    console.log($offsettop);
     $("html,body").animate({
       scrollTop: $offsettop //赋值给滚动条top值
     });
@@ -268,7 +267,6 @@ export default {
     clickHead: function() {
       var setCoverOpacity = function() {
         var $scrolltop = $(window).scrollTop();
-        console.log($scrolltop);
         if ($scrolltop > 0 && $scrolltop < 371) {
           $(".detailHead_text3").removeClass("active");
           $(".detailHead_text2").removeClass("active");
