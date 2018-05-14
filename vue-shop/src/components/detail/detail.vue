@@ -15,23 +15,25 @@
 
     <div class="detailHead">
         <ul class="detailHead_text">
-          <li>宝贝</li>
-          <li>评价</li>
-          <li>详情</li>
+          <li class="detailHead_text1">宝贝</li>
+          <li class="detailHead_text2">评价</li>
+          <li class="detailHead_text3">详情</li>
         </ul>
     </div>
 
-    <div class="detailSwipe">
-      <mt-swipe :auto="4000">
-        <mt-swipe-item v-for="(data,index) in detailLbtImg" :key="index">
-            <img :src="'http://www.d1sc.com/'+data.path+'/'+data.name">
-        </mt-swipe-item>
-      </mt-swipe>
-    </div>
+    
 
       <div class="detailMain">
 
-          <div class="detailMain1 aaasss">
+        <div class="detailSwipe aaasss">
+              <mt-swipe :auto="4000">
+                <mt-swipe-item v-for="(data,index) in detailLbtImg" :key="index">
+                    <img :src="'http://www.d1sc.com/'+data.path+'/'+data.name">
+                </mt-swipe-item>
+              </mt-swipe>
+            </div>
+
+          <div class="detailMain1">
             <p class="detailMainP wwww">{{titlePriceSales.goods_name}}</p>
             <div class="detailMainF wwww"   @click="selectionSpecificationShow1()">
                 <div class="detailMainImg">
@@ -106,7 +108,7 @@
           <div class="detailMain1s_selection" @click="selectionSpecificationHide1()"></div>
             <!-- ============================================= -->
 
-          <div class="detailMain2">
+          <div class="detailMain2 aaasss">
               <p>供货价: {{titlePriceSales.store_price}}</p>
               <div class="detailMain2S">
                   <span>建议售价: {{titlePriceSales.goods_price}}</span>
@@ -136,13 +138,13 @@
             </div>
           <div class="detailMain3s_selection" @click="selectionSpecificationHide()"></div>
           <!-- ============================== -->
-          <div class="detailMain4 aaasss">
+          <div class="detailMain4 ">
               <span>商品评价（{{evaluation.evaluateSum}}）</span>
               <span>查看评价</span>
               <span><img src="../../assets/mIcon/title_back_normal.png" alt=""></span>
           </div>
-
-          <div class="detailMain5">
+ 
+          <div class="detailMain5 aaasss">
             <div class="detailMain5Span">
               <span>好评（{{evaluation.praiseNum}}）</span>
               <span>中评（{{evaluation.commonlyNum}}）</span>
@@ -157,7 +159,7 @@
             <p class="detailMain5P">{{evaluationnnn.assessingCharacter}}</p>
           </div>
 
-          <div class="detailMain6">
+          <div class="detailMain6 ">
               <div class="detailMain6He">
                   <div class="detailMain6HeImg">
                       <img src="../../assets/mIcon/icon_bonus_list.png" alt="">
@@ -180,7 +182,7 @@
               </div>
           </div>
 
-          <div class="detailMain7 aaasss"></div>
+          <div class="detailMain7"></div>
 
       </div>
 
@@ -201,6 +203,18 @@
 </template>
 
 <script>
+$(function() {
+  //头部的点击到对应模块
+  $(".detailHead_text li").on("click", function() {
+    var $offsettop = $(".detailMain .aaasss")
+      .eq($(this).index())
+      .offset().top;
+    console.log($offsettop);
+    $("html,body").animate({
+      scrollTop: $offsettop //赋值给滚动条top值
+    });
+  });
+});
 import axios from "axios";
 import qs from "qs";
 export default {
@@ -217,8 +231,9 @@ export default {
       serving: "" //服务
     };
   },
-  created() {
+  mounted() {
     this.fetchData();
+    this.clickHead();
   },
 
   methods: {
@@ -249,24 +264,60 @@ export default {
         });
     },
 
-  // 选择规格
-      selectionSpecificationShow: function() {
-        $(".detailMain3s_selection").animate({top:"0"},200);
-        $(".detailMain3s_selection1").animate({bottom:"0"},200);
-      },
-      selectionSpecificationHide: function() {
-        $(".detailMain3s_selection").animate({top:"19.2rem"},200);
-        $(".detailMain3s_selection1").animate({bottom:"-13.5rem"},200);
-      },
+    // 头部的opacity值变化.优化
+    clickHead: function() {
+      var setCoverOpacity = function() {
+        var $scrolltop = $(window).scrollTop();
+        console.log($scrolltop);
+        if ($scrolltop > 0 && $scrolltop < 371) {
+          $(".detailHead_text3").removeClass("active");
+          $(".detailHead_text2").removeClass("active");
+          $(".detailHead_text1").addClass("active");
+        } else if ($scrolltop >= 371 && $scrolltop < 530) {
+          $(".detailHead_text3").removeClass("active");
+          $(".detailHead_text1").removeClass("active");
+          $(".detailHead_text2").addClass("active");
+        } else if ($scrolltop >= 530) {
+          $(".detailHead_text1").removeClass("active");
+          $(".detailHead_text2").removeClass("active");
+          $(".detailHead_text3").addClass("active");
+        }
+        if ($scrolltop == 0) {
+          $(".detailHead").css({
+            opacity: 0,display: 'none'
+          });
+        } else {
+          $(".detailHead").css({display: 'block',
+            opacity: $scrolltop / 180 > 1 ? 1 : $scrolltop / 180
+          });
+        }
+      };
+      //初始化设置背景透明度
+      setCoverOpacity();
+      //监听滚动条事件，改变透明度
+      $(window).scroll(function() {
+        setCoverOpacity();
+      });
+    },
+
+    // 选择规格
+    selectionSpecificationShow: function() {
+      $(".detailMain3s_selection").animate({ top: "0" }, 200);
+      $(".detailMain3s_selection1").animate({ bottom: "0" }, 200);
+    },
+    selectionSpecificationHide: function() {
+      $(".detailMain3s_selection").animate({ top: "19.2rem" }, 200);
+      $(".detailMain3s_selection1").animate({ bottom: "-13.5rem" }, 200);
+    },
     //分享赚钱
     selectionSpecificationShow1: function() {
-        $(".detailMain1s_selection").animate({top:"0"},200);
-        $(".detailMain1s_selection1").animate({bottom:"0"},200);
-      },
-      selectionSpecificationHide1: function() {
-        $(".detailMain1s_selection").animate({top:"19.2rem"},200);
-        $(".detailMain1s_selection1").animate({bottom:"-8.99rem"},200);
-      },
+      $(".detailMain1s_selection").animate({ top: "0" }, 200);
+      $(".detailMain1s_selection1").animate({ bottom: "0" }, 200);
+    },
+    selectionSpecificationHide1: function() {
+      $(".detailMain1s_selection").animate({ top: "19.2rem" }, 200);
+      $(".detailMain1s_selection1").animate({ bottom: "-8.99rem" }, 200);
+    }
   }
 };
 </script>
@@ -305,9 +356,8 @@ export default {
   width: 100%;
   height: 3.9rem;
   background: #fff;
-  display: none;
+  opacity: 0;
   .detailHead_text {
-    position: absolute;
     li {
       width: 3.6rem;
       height: 1.48rem;
@@ -316,6 +366,7 @@ export default {
       float: left;
       top: 2.42rem;
       position: relative;
+      font-size: .36rem;
     }
     .active {
       color: red;
@@ -376,7 +427,7 @@ export default {
   .detailMain2 {
     height: 2.4rem;
     border-bottom: 0.12rem solid #f2f2f2;
-    
+
     p {
       margin-top: 0.06rem;
       line-height: 1.3rem;
@@ -463,12 +514,10 @@ export default {
     }
     .detailMain5Span {
       span {
-        width: 1.89rem;
         height: 0.74rem;
         display: inline-block;
         float: left;
         line-height: 0.74rem;
-        text-align: center;
         background: #fecccb;
         color: #6a6464;
         font-size: 0.34rem;
@@ -560,200 +609,194 @@ export default {
   }
   .detailMain7 {
     position: absolute;
-    height: 5rem;
+    height: 20rem;
     width: 100%;
     top: 26rem;
   }
 
-  .detailMain1s_selection1{
+  .detailMain1s_selection1 {
     width: 100%;
     position: fixed;
     z-index: 999;
     background: #fff;
     bottom: -8.99rem;
-    .detailMain1s_selection1Btn1{
+    .detailMain1s_selection1Btn1 {
       height: 1.54rem;
       line-height: 1.54rem;
       text-align: center;
-      font-size: .35rem;
+      font-size: 0.35rem;
       color: #666666;
     }
-    .detailMain1s_selection1Btn{
+    .detailMain1s_selection1Btn {
       height: 1.78rem;
       line-height: 1.78rem;
       text-align: center;
-      font-size: .51rem;
+      font-size: 0.51rem;
       color: #666666;
     }
 
-    .sharePl{
+    .sharePl {
       height: 3.26rem;
 
-      li{
-        margin-top: .54rem;
+      li {
+        margin-top: 0.54rem;
         width: 2.7rem;
         float: left;
-        .sharePlus{
+        .sharePlus {
           width: 1.44rem;
           height: 1.44rem;
           background: #ebebeb;
           border-radius: 14%;
           margin: auto;
-          margin-bottom: .33rem;
-          div{
-            width: .6rem;
-            height: .6rem;
-            padding-top: .42rem;
-            padding-left: .42rem;
+          margin-bottom: 0.33rem;
+          div {
+            width: 0.6rem;
+            height: 0.6rem;
+            padding-top: 0.42rem;
+            padding-left: 0.42rem;
           }
         }
-        .shareP{
-          font-size: .34rem;
+        .shareP {
+          font-size: 0.34rem;
           color: #616161;
           text-align: center;
         }
       }
     }
-    .sharePl2{
-        height: 2.12rem;
-        margin-top: .3rem;
-      li{
+    .sharePl2 {
+      height: 2.12rem;
+      margin-top: 0.3rem;
+      li {
         position: absolute;
-        .sharePlus2{
+        .sharePlus2 {
           margin: auto;
         }
-        .shareP2{
-          margin-top: .53rem;
+        .shareP2 {
+          margin-top: 0.53rem;
           text-align: center;
-          font-size: .31rem;
+          font-size: 0.31rem;
         }
       }
-      :nth-child(1){
-        left: .82rem;
-        .sharePlus2{
-            width: .52rem;
-            height: .53rem;
+      :nth-child(1) {
+        left: 0.82rem;
+        .sharePlus2 {
+          width: 0.52rem;
+          height: 0.53rem;
         }
       }
-       :nth-child(2){
+      :nth-child(2) {
         left: 2.5rem;
-        .sharePlus2{
-            width: .64rem;
-            height: .53rem;
+        .sharePlus2 {
+          width: 0.64rem;
+          height: 0.53rem;
         }
       }
-       :nth-child(3){
-         left: 4.5rem;
-        .sharePlus2{
-            width: .6rem;
-            height: .6rem;
+      :nth-child(3) {
+        left: 4.5rem;
+        .sharePlus2 {
+          width: 0.6rem;
+          height: 0.6rem;
         }
-        .shareP2{
-          margin-top: .46rem;
-        }
-      }
-       :nth-child(4){
-         right: 2.8rem;
-        .sharePlus2{
-            width: .63rem;
-            height: .53rem;
+        .shareP2 {
+          margin-top: 0.46rem;
         }
       }
-       :nth-child(5){
-         right: .29rem;
-        .sharePlus2{
-            width: .62rem;
-            height: .62rem;
+      :nth-child(4) {
+        right: 2.8rem;
+        .sharePlus2 {
+          width: 0.63rem;
+          height: 0.53rem;
         }
-        .shareP2{
-          margin-top: .44rem;
+      }
+      :nth-child(5) {
+        right: 0.29rem;
+        .sharePlus2 {
+          width: 0.62rem;
+          height: 0.62rem;
+        }
+        .shareP2 {
+          margin-top: 0.44rem;
         }
       }
     }
-    // .<li>
-    //                 <div class="sharePlus2">
-    //                     <img src="../../assets/mIcon/share.png" alt="">
-    //                 </div>
-    //                 <div class="shareP2">QQ</div>
-    //               </li>
-    
   }
-    .detailMain3s_selection,.detailMain1s_selection{
-      position: fixed;
-      z-index: 998;
-      width: 100%;
-      height: 19.2rem;
-      bottom: 0;
-      background: #3f3838;
-      opacity: .5;
-      top: 19.2rem;
+  .detailMain3s_selection,
+  .detailMain1s_selection {
+    position: fixed;
+    z-index: 998;
+    width: 100%;
+    height: 19.2rem;
+    bottom: 0;
+    background: #3f3838;
+    opacity: 0.5;
+    top: 19.2rem;
   }
   .detailMain3s_selection1 {
     width: 100%;
     position: fixed;
     z-index: 999;
     background: #fff;
-    padding-left: .48rem;
-    padding-bottom: .48rem;
+    padding-left: 0.48rem;
+    padding-bottom: 0.48rem;
     bottom: -13.5rem;
     height: 12.42rem;
-    .detailMain3s_selection1Img{
+    .detailMain3s_selection1Img {
       width: 3rem;
       height: 3rem;
-      top: -.6rem;
+      top: -0.6rem;
       position: absolute;
     }
-    .detailMain3s_selection1X{
-      width: .66rem;
-      height: .66rem;
+    .detailMain3s_selection1X {
+      width: 0.66rem;
+      height: 0.66rem;
       position: absolute;
       right: 1rem;
-      top: .45rem;
+      top: 0.45rem;
     }
-    .detailMain3s_selection1H{
-      font-size: .45rem;
+    .detailMain3s_selection1H {
+      font-size: 0.45rem;
       position: absolute;
       top: 4.02rem;
-      left: .73rem;
+      left: 0.73rem;
       font-weight: normal;
     }
-    .count{
+    .count {
       position: absolute;
-        top: 3.78rem;
-        right: 1rem;
-      .count-btn{
+      top: 3.78rem;
+      right: 1rem;
+      .count-btn {
         display: inline-block;
-        height: .9rem;
+        height: 0.9rem;
         width: 1.68rem;
-        line-height: .9rem;
+        line-height: 0.9rem;
         text-align: center;
         background: #f97314;
         color: #fff;
         font-weight: bold;
         border-radius: 8%;
       }
-      .countNumber{
+      .countNumber {
         color: #757575;
         background: none;
-        border: .02rem solid #757575;
-        margin: 0 .28rem;
+        border: 0.02rem solid #757575;
+        margin: 0 0.28rem;
         font-weight: normal;
       }
     }
-    .detailMain3s_selection1Btn{
+    .detailMain3s_selection1Btn {
       width: 9.84rem;
       height: 1.44rem;
       background: #f97314;
       color: #fff;
-      font-size: .43rem;
+      font-size: 0.43rem;
       font-weight: bold;
       outline: none;
       border: none;
       border-radius: 2%;
       position: absolute;
-      bottom: .48rem;
+      bottom: 0.48rem;
     }
-}
+  }
 }
 .detailFoot {
   position: fixed;
@@ -779,6 +822,7 @@ export default {
       position: absolute;
       top: 1rem;
       left: 0.44rem;
+      font-size: .36rem;
     }
   }
   .detailFootS {
