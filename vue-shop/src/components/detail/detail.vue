@@ -203,17 +203,6 @@
 </template>
 
 <script>
-$(function() {
-  //头部的点击到对应模块
-  $(".detailHead_text li").on("click", function() {
-    var $offsettop = $(".detailMain .aaasss")
-      .eq($(this).index())
-      .offset().top;
-    $("html,body").animate({
-      scrollTop: $offsettop //赋值给滚动条top值
-    });
-  });
-});
 import axios from "axios";
 import qs from "qs";
 export default {
@@ -265,6 +254,15 @@ export default {
 
     // 头部的opacity值变化.优化
     clickHead: function() {
+      //头部的点击到对应模块
+      $(".detailHead_text li").on("click", function() {
+        var $offsettop = $(".detailMain .aaasss")
+          .eq($(this).index())
+          .offset().top;
+        $("html,body").animate({
+          scrollTop: $offsettop //赋值给滚动条top值
+        });
+      });
       var setCoverOpacity = function() {
         var $scrolltop = $(window).scrollTop();
         if ($scrolltop > 0 && $scrolltop < 371) {
