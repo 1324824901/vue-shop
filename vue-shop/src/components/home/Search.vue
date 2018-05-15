@@ -51,53 +51,61 @@ export default {
 
 <style lang="scss" scoped>
 .search {
-  height: 2.16rem;
+  height: 1.78rem;
+  position: relative;
   .search1 {
-    float: left;
     p {
       font-size: 0.43rem;
-      margin-top: 1.34rem;
-      margin-right: 0.21rem;
+    position: absolute;
+      left:1.26rem;
+      top:.6rem;
     }
     .left-arrow {
       height: 0.6rem;
       width: 0.37rem;
-      margin-top: 1.32rem;
-      margin-right: 0.3rem;
-      margin-left: 0.37rem;
+      left: 0.36rem;
+      position: absolute;
+      top: 0.6rem;
       img {
         width: 100%;
         height: 100%;
       }
     }
     .bottom-arrow {
-      margin-top: 1rem;
+    position: absolute;
+      height: .24rem;
+      width:.32rem;
+      left:2.96rem;
+      top: .7rem;
     }
     input {
       outline: none;
-      padding: 0.3rem 1.06rem 0.32rem 0.24rem;
-      font-size: 0.3rem;
+      position: absolute;
+      width: 4.69rem;
+      padding: 0.25rem 0 0.32rem 0.24rem;
       border-radius: 2%;
       border: 0;
+          font-size: .34rem;
       color: #959595;
       background: #e9e9e9;
-      margin-top: 1.13rem;
-      margin-right: 0.3rem;
-      margin-left: 0.5rem;
+      right: 1.8rem;
+      height: .46rem;
+      top:.4rem;
     }
     .mint-button {
+      position: absolute;
       width: 1.2rem;
       height: 0.92rem;
       background: #f97d23;
       padding: 0;
-      margin-top: 1.17rem;
+      right:.3rem;
+      top: 0.5rem;
     }
   }
 }
 .maskLayer {
   width: 10.8rem;
-  height: 16.7rem;
+  height: 17.4rem;
   background: rgb(212, 212, 212);
-  margin-top: 0.4rem;
 }
 </style>
