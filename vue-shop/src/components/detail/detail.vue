@@ -261,7 +261,7 @@ export default {
           .offset().top;
         $("html,body").animate({
           scrollTop: $offsettop //赋值给滚动条top值
-        });只要能打字的地方都打
+        });
       });
       var setCoverOpacity = function() {
         var $scrolltop = $(window).scrollTop();
