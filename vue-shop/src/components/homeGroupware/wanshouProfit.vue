@@ -10,7 +10,7 @@
         <img src="../../assets/mIcon/img_bonus_list_head_bg.png">
     </div>
     <!-- tab切换 -->
-    <div class="nav nav1" @click='salesTab()'>
+    <div class="nav nav1">
       <mt-button size="small" @click.native.prevent="active = 'tab-container1'">日盈利</mt-button>  
       <mt-button size="small" @click.native.prevent="active = 'tab-container2'">月盈利</mt-button>
       <mt-button size="small" @click.native.prevent="active = 'tab-container3'">年盈利</mt-button>  
@@ -86,6 +86,9 @@ export default {
   created() {
     //打开页面首先自动获取一次数据
     this.path(1);
+  },
+  mounted(){
+    this.salesTab();
   }
 };
 </script>

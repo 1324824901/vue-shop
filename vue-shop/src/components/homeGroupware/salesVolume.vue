@@ -10,7 +10,7 @@
         <img src="../../assets/mIcon/img_ac_sales_list_bg.png">
     </div>
     <!-- tab切换 -->
-    <div class="nav nav1"  @click='salesTab()'>
+    <div class="nav nav1">
        <mt-button size="small" @click.native.prevent="active='tab-container1'">日销量</mt-button>  <!--// @click="ChoiceType" :Choiced='0' -->
       <mt-button size="small" @click.native.prevent="active = 'tab-container2' ">月销量</mt-button>
       <mt-button size="small" @click.native.prevent="active = 'tab-container3'">年销量</mt-button>  
@@ -149,6 +149,9 @@ export default {
     //打开页面首先自动获取一次数据
     this.path();
   },
+  mounted(){
+    this.salesTab();
+  }
  
 };
 </script>
