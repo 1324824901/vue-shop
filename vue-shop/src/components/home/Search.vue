@@ -19,7 +19,7 @@
         <input type="text" placeholder="请输入要搜索的商品名称">
       </div>
       <div class="search1">
-      <mt-button size="small" type="primary">搜索</mt-button>                  
+      <button type="submit" class="mint-button11">搜索</button>               
       </div>
     </div>
     <div class="maskLayer"></div>
@@ -83,7 +83,7 @@ export default {
       position: absolute;
       width: 4.69rem;
       padding: 0.25rem 0 0.32rem 0.24rem;
-      border-radius: 2%;
+      border-radius: 3%;
       border: 0;
           font-size: .34rem;
       color: #959595;
@@ -92,14 +92,19 @@ export default {
       height: .46rem;
       top:.4rem;
     }
-    .mint-button {
+    .mint-button11 {
       position: absolute;
       width: 1.2rem;
       height: 0.92rem;
       background: #f97d23;
       padding: 0;
       right:.3rem;
-      top: 0.5rem;
+      top: 0.45rem;
+      font-size:.34rem;
+      border: 0;
+      outline:none;
+      color:#fff;
+      border-radius: 12%;
     }
   }
 }
