@@ -20,6 +20,9 @@ const bindingNumber = resolve => require(['@/components/loginRegister/bindingNum
 const bindingAccount = resolve => require(['@/components/loginRegister/bindingAccount.vue'], resolve);
 const forgetPass = resolve => require(['@/components/loginRegister/forgetPass.vue'], resolve);
 const detail = resolve => require(['@/components/detail/detail.vue'], resolve);
+const detailShop = resolve => require(['@/components/detail/detailShop.vue'], resolve);
+const detailSearch = resolve => require(['@/components/detail/detailSearch.vue'], resolve);
+const detailMore = resolve => require(['@/components/detail/detailMore.vue'], resolve);
 
 Vue.use(Router);
 export default new Router({
@@ -118,6 +121,21 @@ export default new Router({
       path: "/detail",
       name: "详情页",
       component: detail
+    },
+    {
+      path: "/detail/detailShop",
+      name: "店铺",
+      component: detailShop
+    },
+    {
+      path: "/detail/detailSearch",
+      name: "店铺搜索商品",
+      component: detailSearch
+    },
+    {
+      path: "/detail/detailMore",
+      name: "店铺搜索更多商品",
+      component: detailMore
     },
   ]
 });

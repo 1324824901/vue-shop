@@ -168,7 +168,7 @@
                       <p>{{Merchants.userName}}</p>
                       <p>已缴纳保证金{{depositt.deposit}}元</p>
                   </div>
-                  <button class="detailMainBtn">进店逛逛</button>
+                  <router-link to="/detail/detailShop"><button class="detailMainBtn">进店逛逛</button></router-link>
               </div>
               <div class="detailMain6Ma">
                   <div>
@@ -187,12 +187,12 @@
       </div>
 
       <div class="detailFoot">
-        <div class="detailFootImgP">
+        <router-link to="/detail/detailShop"><div class="detailFootImgP">
             <div>
                 <img src="../../assets/mIcon/icon_bonus_list.png" alt="">
             </div>
             <p>店铺</p>
-        </div>
+        </div></router-link>
         <div class="detailFootS">
             <span class="specification" @click="selectionSpecificationShow()">加入购物车</span>
             <span class="specification"  @click="selectionSpecificationShow()">立即购买</span>
@@ -819,6 +819,7 @@ export default {
       top: 1rem;
       left: 0.44rem;
       font-size: .36rem;
+      color: #000;
     }
   }
   .detailFootS {
