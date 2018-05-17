@@ -24,7 +24,7 @@
     
 
       <div class="detailMain">
-
+      
         <div class="detailSwipe aaasss">
               <mt-swipe :auto="4000">
                 <mt-swipe-item v-for="(data,index) in detailLbtImg" :key="index">
@@ -107,7 +107,6 @@
             </div>
           <div class="detailMain1s_selection" @click="selectionSpecificationHide1()"></div>
             <!-- ============================================= -->
-
           <div class="detailMain2 aaasss">
               <p>供货价: {{titlePriceSales.store_price}}</p>
               <div class="detailMain2S">
@@ -217,6 +216,7 @@ export default {
       depositt: "", //保证金
       Merchants: "", //商家用户名
       serving: "", //服务
+       id:this.$route.params.id
     };
   },
   mounted() {

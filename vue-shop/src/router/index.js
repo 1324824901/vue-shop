@@ -28,11 +28,21 @@ const detailEvaluation = resolve => require(['@/components/detail/detailEvaluati
 Vue.use(Router);
 export default new Router({
   routes: [
+
     {
       path: "/",
       name: "首页",
       component: Home
     },
+    {
+      path: "/detail/:id",
+      name: "detail",
+      component: detail
+    },
+
+
+
+
     {
       path: "/sharedGoods",
       name: "共享商品",
@@ -118,11 +128,7 @@ export default new Router({
       name: "忘记密码",
       component: forgetPass
     },
-    {
-      path: "/detail/:id",
-      name: "detail",
-      component: detail
-    },
+   
     {
       path: "/detail/detailShop",
       name: "店铺",

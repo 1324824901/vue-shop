@@ -215,7 +215,7 @@ export default {
       lbtImgList: [], //首页轮播
       homeItemList: [], //首页商品
       sharedGood: "",//首页共享
-      id:this.$route.params.id
+      id:''
     };
   },
 
