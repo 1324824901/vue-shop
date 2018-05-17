@@ -138,17 +138,17 @@
             </div>
           <div class="detailMain3s_selection" @click="selectionSpecificationHide()"></div>
           <!-- ============================== -->
-          <div class="detailMain4 ">
-              <span>商品评价（{{evaluation.evaluateSum}}）</span>
+          <router-link to="/detail/detailEvaluation"><div class="detailMain4">
+              <span>商品评价({{evaluation.evaluateSum}})</span>
               <span>查看评价</span>
               <span><img src="../../assets/mIcon/title_back_normal.png" alt=""></span>
-          </div>
+          </div></router-link>
  
           <div class="detailMain5 aaasss">
             <div class="detailMain5Span">
-              <span>好评（{{evaluation.praiseNum}}）</span>
-              <span>中评（{{evaluation.commonlyNum}}）</span>
-              <span>差评（{{evaluation.badNum}}）</span>
+              <span>好评({{evaluation.praiseNum}})</span>
+              <span>中评({{evaluation.commonlyNum}})</span>
+              <span>差评({{evaluation.badNum}})</span>
             </div>
             <div class="detailMain5M">
               <div class="detailMain5Mimg">
@@ -216,7 +216,7 @@ export default {
       evaluationnnn: "", //用户的内容（评价）
       depositt: "", //保证金
       Merchants: "", //商家用户名
-      serving: "" //服务
+      serving: "", //服务
     };
   },
   mounted() {
@@ -230,7 +230,7 @@ export default {
         .post(
           "http://www.d1sc.com/api_goods_detail.htm",
           qs.stringify({
-            id: 78781
+            id:this.$route.params.id
           })
         )
         .then(res => {
@@ -578,6 +578,10 @@ export default {
         border: none;
         right: 0.44rem;
         top: 1.36rem;
+        border-radius: .5rem .5rem .5rem .5rem;
+        width: 2rem;
+        font-size: .4rem;
+        height: .7rem;
       }
     }
     .detailMain6Ma {
@@ -799,14 +803,16 @@ export default {
   height: 1.67rem;
   width: 100%;
   bottom: 0;
-  border-top: 0.01rem solid #999999;
   background: #fff;
   .detailFootImgP {
-    position: relative;
+    position: absolute;
+    border-top: 0.01rem solid #999999;
+    height: 1.67rem;
+    width: 3.26rem;
     div {
       width: 0.54rem;
       height: 0.52rem;
-      position: absolute;
+      position: relative;
       top: 0.27rem;
       left: 0.54rem;
       img {

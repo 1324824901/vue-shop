@@ -215,6 +215,7 @@ export default {
       lbtImgList: [], //首页轮播
       homeItemList: [], //首页商品
       sharedGood: "",//首页共享
+      id:this.$route.params.id
     };
   },
 
@@ -223,8 +224,9 @@ export default {
       //跳转到详情页
       this.$router.push({ 
         path: "/detail" ,
+        name: 'detail', 
+        params: { id:this.$route.params.id }
       }); 
-      
     },
     // loadTop() {
     //   console.log(1); //下拉刷新
@@ -244,7 +246,8 @@ export default {
     //数据获取
     path() {
       axios
-        .post("http://www.d1sc.com/getHomePageDate.htm", qs.stringify({}))
+        .post("http://www.d1sc.com/getHomePageDate.htm", qs.stringify({
+        }))
         .then(res => {
           console.log(res);
           this.lbtImgList = res.data.result.homePageCarousel;

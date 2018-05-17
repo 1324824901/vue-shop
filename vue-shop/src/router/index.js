@@ -23,6 +23,7 @@ const detail = resolve => require(['@/components/detail/detail.vue'], resolve);
 const detailShop = resolve => require(['@/components/detail/detailShop.vue'], resolve);
 const detailSearch = resolve => require(['@/components/detail/detailSearch.vue'], resolve);
 const detailMore = resolve => require(['@/components/detail/detailMore.vue'], resolve);
+const detailEvaluation = resolve => require(['@/components/detail/detailEvaluation.vue'], resolve);
 
 Vue.use(Router);
 export default new Router({
@@ -118,8 +119,8 @@ export default new Router({
       component: forgetPass
     },
     {
-      path: "/detail",
-      name: "详情页",
+      path: "/detail/:id",
+      name: "detail",
       component: detail
     },
     {
@@ -136,6 +137,11 @@ export default new Router({
       path: "/detail/detailMore",
       name: "店铺搜索更多商品",
       component: detailMore
+    },
+    {
+      path: "/detail/detailEvaluation",
+      name: "用户评价",
+      component: detailEvaluation
     },
   ]
 });
