@@ -142,20 +142,20 @@
               <span>查看评价</span>
               <span><img src="../../assets/mIcon/title_back_normal.png" alt=""></span>
           </div></router-link>
- 
+
           <div class="detailMain5 aaasss">
             <div class="detailMain5Span">
               <span>好评({{evaluation.praiseNum}})</span>
               <span>中评({{evaluation.commonlyNum}})</span>
               <span>差评({{evaluation.badNum}})</span>
             </div>
-            <div class="detailMain5M">
+            <div class="detailMain5M" v-if="evaluation.evaluate">
               <div class="detailMain5Mimg">
-                <img :src="'http://www.d1sc.com/'+evaluationn.path+'/'+evaluationn.name">
+                <img :src="'http://www.d1sc.com/'+evaluation.evaluate.user.photo.path+'/'+evaluation.evaluate.user.photo.name">
               </div>
-              <span>{{evaluationnn.userName}}</span>
+              <span>{{evaluation.evaluate.user.userName}}</span>
             </div>
-            <p class="detailMain5P">{{evaluationnnn.assessingCharacter}}</p>
+            <p class="detailMain5P" v-if="evaluation.evaluate">{{evaluation.evaluate.assessingDiscourse.assessingCharacter}}</p>
           </div>
 
           <div class="detailMain6 ">
@@ -186,7 +186,7 @@
       </div>
 
       <div class="detailFoot">
-        <router-link to="/detail/detailShop"><div class="detailFootImgP">
+        <router-link to="/detailevaluateSum/detailShop"><div class="detailFootImgP">
             <div>
                 <img src="../../assets/mIcon/icon_bonus_list.png" alt="">
             </div>
@@ -210,13 +210,10 @@ export default {
       detailLbtImg: [], //轮播
       titlePriceSales: "", //标题，价格，销量
       evaluation: "", //评价
-      evaluationn: "", //用户的头像（评价）
-      evaluationnn: "", //用户的名字（评价）
-      evaluationnnn: "", //用户的内容（评价）
       depositt: "", //保证金
       Merchants: "", //商家用户名
       serving: "", //服务
-       id:this.$route.params.id
+       id:''//取到本身的id
     };
   },
   mounted() {
@@ -238,14 +235,10 @@ export default {
           this.detailLbtImg = res.data.result.goods_photos; //轮播
           this.titlePriceSales = res.data.result; //标题，价格，销量
           this.evaluation = res.data.result.appEvaluateDate; //评价
-          this.evaluationn =
-            res.data.result.appEvaluateDate.evaluate.user.photo; //用户的头像（评价）
-          this.evaluationnn = res.data.result.appEvaluateDate.evaluate.user; //用户的名字（评价）
-          this.evaluationnnn =
-            res.data.result.appEvaluateDate.evaluate.assessingDiscourse; //用户的内容（评价）
           this.depositt = res.data.result.appEvaluateDate; //保证金
           this.Merchants = res.data.result.goods_store.user; //商家用户名
           this.serving = res.data.result.storeScoreEntity; //物流和卖家服务
+          console.log(this.serving);
         })
         .catch(function(error) {
           console.log(error);

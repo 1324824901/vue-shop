@@ -12,7 +12,7 @@
     <!-- 轮播 -->
 
     <mt-swipe :auto="3000" class="swipe1">
-    <mt-swipe-item v-for="(data,index) in lbtImgList" :key="index"><img :src="'http://www.d1sc.com/'+data.defaultGoods.goods_main_photo.path+'/'+data.defaultGoods.goods_main_photo.name" @click="goto_detail(data)"/></mt-swipe-item>
+    <mt-swipe-item v-for="(data,index) in lbtImgList" :key="index"><img :src="'http://www.d1sc.com/'+data.defaultGoods.goods_main_photo.path+'/'+data.defaultGoods.goods_main_photo.name" @click="goto_detail(data.defaultGoods.id)"/></mt-swipe-item>
     </mt-swipe>
       <!-- 栅格 -->
     <div class="grid">
@@ -167,7 +167,7 @@
 　　　　　　</li>
 　　　　</ul>-->
   <div class="item-list">
-    <ul class="item-Ulist" v-for="(data,index) in homeItemList" :key="index" @click="goto_detail(data)">
+    <ul class="item-Ulist" v-for="(data,index) in homeItemList" :key="index" @click="goto_detail(data.defaultGoods.id)">
       <li class="item-img"><img :src="'http://www.d1sc.com/'+data.defaultGoods.goods_main_photo.path+'/'+data.defaultGoods.goods_main_photo.name">
       <li class="item-text">{{data.defaultGoods.goods_name}}</li>
       <li class="item-price">
@@ -220,12 +220,13 @@ export default {
   },
 
   methods: {
-    goto_detail(payload) {
+    goto_detail(id) {
       //跳转到详情页
+      console.log(id);
       this.$router.push({ 
         path: "/detail" ,
         name: 'detail', 
-        params: { id:this.$route.params.id }
+        params: { id:id }
       }); 
     },
     // loadTop() {

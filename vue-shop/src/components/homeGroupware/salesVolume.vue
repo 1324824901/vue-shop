@@ -70,7 +70,7 @@
           </mt-cell>
         </mt-tab-container-item>
         <mt-tab-container-item id="tab-container4">
-            <!-- cell组件 -->x
+            <!-- cell组件 -->
           <mt-cell v-for="(data,index) in alwaysSalesVolume" :key="index">
              <div class="salesVolumeImg">
                  <img :src="'http://www.d1sc.com/'+data.goods_main_photo
@@ -99,8 +99,27 @@ export default {
     return {
       active: "tab-container1",
       daySalesVolume: [], //销量
-      alwaysSalesVolume: [] //总销量
+      alwaysSalesVolume: [], //总销量
+      choice:0,
     };
+  },
+  watch:{
+    active:function(){
+      if(this.active=='tab-container1'){
+        this.choice=0;
+        this.path()
+      }
+          else if(this.active=='tab-container2'){
+        this.choice=1;
+        this.path()
+      }
+           else if(this.active=='tab-container3'){
+        this.choice=2;
+        this.path()
+      }else if(this.active=='tab-container4'){
+this.allPath();
+      }
+    }
   },
   methods: {
     //数据获取
@@ -109,7 +128,7 @@ export default {
         .post(
           "http://www.d1sc.com/appGainGoodSequence.htm",
           qs.stringify({
-            Choice: 1 //日销量
+            Choice: this.choice //日销量
             // "currentPage":1,
           })
         )
@@ -120,6 +139,8 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+    },
+  allPath(){
       axios
         .post("http://www.d1sc.com/appGetGoodsSequence.htm", qs.stringify({}))
         .then(res => {
