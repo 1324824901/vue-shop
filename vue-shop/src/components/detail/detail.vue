@@ -137,13 +137,13 @@
             </div>
           <div class="detailMain3s_selection" @click="selectionSpecificationHide()"></div>
           <!-- ============================== -->
-          <router-link to="/detail/detailEvaluation"><div class="detailMain4">
-              <span>商品评价({{evaluation.evaluateSum}})</span>
-              <span>查看评价</span>
-              <span><img src="../../assets/mIcon/title_back_normal.png" alt=""></span>
-          </div></router-link>
+          <div class="detailMain4">
+              <span class="detailMain3s_selectionSpan">商品评价({{evaluation.evaluateSum}})</span>
+              <span class="detailMain3s_selectionSpan1" v-show="evaluation.evaluate" >查看评价</span>
+              <span class="detailMain3s_selectionSpan2"><img src="../../assets/mIcon/title_back_normal.png" alt=""></span>
+          </div>
 
-          <div class="detailMain5 aaasss">
+          <div class="detailMain5 aaasss" v-show="evaluation.evaluate">
             <div class="detailMain5Span">
               <span>好评({{evaluation.praiseNum}})</span>
               <span>中评({{evaluation.commonlyNum}})</span>
@@ -151,13 +151,12 @@
             </div>
             <div class="detailMain5M" v-if="evaluation.evaluate">
               <div class="detailMain5Mimg">
-                <img :src="'http://www.d1sc.com/'+evaluation.evaluate.user.photo.path+'/'+evaluation.evaluate.user.photo.name">
+                <img v-if="evaluation.evaluate.user" :src="'http://www.d1sc.com/'+evaluation.evaluate.user.photo.path+'/'+evaluation.evaluate.user.photo.name">
               </div>
-              <span>{{evaluation.evaluate.user.userName}}</span>
+              <span  v-if="evaluation.evaluate.user">{{evaluation.evaluate.user.userName}}</span>
             </div>
             <p class="detailMain5P" v-if="evaluation.evaluate">{{evaluation.evaluate.assessingDiscourse.assessingCharacter}}</p>
           </div>
-
           <div class="detailMain6 ">
               <div class="detailMain6He">
                   <div class="detailMain6HeImg">
@@ -181,7 +180,13 @@
               </div>
           </div>
 
-          <div class="detailMain7"></div>
+          <div class="detailMain7">
+            　<frameset >
+
+　　　　    <frame src= "http://www.d1sc.com/api_goods_detail_view.htm?goods_id=78781"></frame>
+
+　　        </frameset>
+          </div>
 
       </div>
 
@@ -213,12 +218,15 @@ export default {
       depositt: "", //保证金
       Merchants: "", //商家用户名
       serving: "", //服务
-       id:''//取到本身的id
+      id:'',//取到本身的id
     };
   },
+ 
   mounted() {
     this.fetchData();
     this.clickHead();
+  },
+  created(){
   },
 
   methods: {
@@ -238,7 +246,6 @@ export default {
           this.depositt = res.data.result.appEvaluateDate; //保证金
           this.Merchants = res.data.result.goods_store.user; //商家用户名
           this.serving = res.data.result.storeScoreEntity; //物流和卖家服务
-          console.log(this.serving);
         })
         .catch(function(error) {
           console.log(error);
@@ -306,9 +313,9 @@ export default {
     selectionSpecificationHide1: function() {
       $(".detailMain1s_selection").animate({ top: "19.2rem" }, 200);
       $(".detailMain1s_selection1").animate({ bottom: "-8.99rem" }, 200);
-    }
+    },
+  },
   }
-};
 </script>
 <style lang="scss">
 .detailHead_left {
@@ -465,17 +472,17 @@ export default {
       line-height: 1.35rem;
       position: absolute;
     }
-    :nth-child(1) {
+    .detailMain3s_selectionSpan{
       color: #343434;
       font-size: 0.37rem;
       left: 0.44rem;
     }
-    :nth-child(2) {
+    .detailMain3s_selectionSpan1 {
       color: #ee422c;
       font-size: 0.37rem;
       right: 0.72rem;
     }
-    :nth-child(3) {
+    .detailMain3s_selectionSpan2 {
       width: 0.2rem;
       height: 0.33rem;
       display: inline-block;

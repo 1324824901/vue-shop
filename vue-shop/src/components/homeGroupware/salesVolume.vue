@@ -117,7 +117,7 @@ export default {
         this.choice=2;
         this.path()
       }else if(this.active=='tab-container4'){
-this.allPath();
+        this.allPath();
       }
     }
   },

@@ -82,6 +82,7 @@
           <p>生活服务</p>
         </div>
         <div>
+         
          <span><img src="../../assets/mIcon/icon_market_gonyipin.png"></span>
           <p>工艺品</p>
         </div>
