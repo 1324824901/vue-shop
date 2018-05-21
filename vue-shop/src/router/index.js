@@ -34,14 +34,7 @@ export default new Router({
       name: "首页",
       component: Home
     },
-    {
-      path: "/detail/:id",
-      name: "detail",
-      component: detail
-    },
-
-
-
+    
 
     {
       path: "/sharedGoods",
@@ -128,24 +121,28 @@ export default new Router({
       name: "忘记密码",
       component: forgetPass
     },
-   
     {
-      path: "/detail/detailShop",
-      name: "店铺",
+      path: "/detail/:id",
+      name: "detail",
+      component: detail
+    },
+    {
+      path: "/detailShop/:storeId",
+      name: "detailShop",
       component: detailShop
     },
     {
-      path: "/detail/detailSearch",
+      path: "/detailSearch/:id",
       name: "店铺搜索商品",
       component: detailSearch
     },
     {
-      path: "/detail/detailMore",
+      path: "/detailMore/:id",
       name: "店铺搜索更多商品",
       component: detailMore
     },
     {
-      path: "/detail/detailEvaluation",
+      path: "/detailEvaluation/:id",
       name: "用户评价",
       component: detailEvaluation
     },

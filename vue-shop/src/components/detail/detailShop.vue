@@ -17,10 +17,10 @@
 
             <div class="detailShopHead2">
                 <div class="detailShopHead2Img">
-                    <img src="../../assets/mIcon/icon_market_gonyipin.png" alt="">
+                    <img :src="'http://www.d1sc.com/'+ShopCaution.user.photo.path+'/'+ShopCaution.user.photo.name" alt="">
                 </div>
-                <h3>YaYa studio</h3>
-                <p class="detailShopHead2P">杨乐乐 商品总部 执行官 列兵</p>
+                <h3>{{ShopCaution.store.store_name}}</h3>
+                <p class="detailShopHead2P">{{ShopCaution.user.userName}} {{ShopCaution.bumen.name}} {{ShopCaution.zhiWei.name}} {{ShopCaution.zhiXian.name}}</p>
             </div>
 
             <ul class="detailShopHead3">
@@ -44,7 +44,7 @@
                 <div class="detailShopSecurityImg">
                     <img src="../../assets/mIcon/security.png" alt="">
                 </div>
-                <p>已缴纳保证金0元，出现问题先行赔付，请勿线下交易！</p>
+                <p>已缴纳保证金{{ShopCaution.bail}}元，出现问题先行赔付，请勿线下交易！</p>
         </div>
         
 
@@ -69,8 +69,36 @@
 </template>
 
 <script>
+import axios from "axios";
+import qs from "qs";
 export default {
-
+        data(){
+            return{
+            ShopCaution:'',//保证金和头部个人信息
+            storeId:'',//取到本身的id
+            }
+        },
+        mounted(){
+            this.personalMall();
+        },
+        methods:{
+            personalMall() {
+            axios
+                .post(
+                "http://www.d1sc.com/getStoreHomePage.htm",
+                qs.stringify({
+                    storeId:this.$route.params.storeId
+                })
+                )
+                .then(res => {
+                console.log(res);
+                this.ShopCaution = res.data.result; //保证金和头部个人信息
+                })
+                .catch(function(error) {
+                console.log(error);
+                });
+            },
+        }
 }
 </script>
 

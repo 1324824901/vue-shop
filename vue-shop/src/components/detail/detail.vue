@@ -182,27 +182,24 @@
 
           <div class="detailMain7">
             　<frameset >
-
 　　　　    <frame src= "http://www.d1sc.com/api_goods_detail_view.htm?goods_id=78781"></frame>
-
 　　        </frameset>
           </div>
 
       </div>
 
       <div class="detailFoot">
-        <router-link to="/detailevaluateSum/detailShop"><div class="detailFootImgP">
+        <div class="detailFootImgP">
             <div>
                 <img src="../../assets/mIcon/icon_bonus_list.png" alt="">
             </div>
-            <p>店铺</p>
-        </div></router-link>
+            <p @click="goto_detailShop(detailShopId.id)">店铺</p>
+        </div>
         <div class="detailFootS">
             <span class="specification" @click="selectionSpecificationShow()">加入购物车</span>
             <span class="specification"  @click="selectionSpecificationShow()">立即购买</span>
         </div>
       </div>
-
   </div>
 </template>
 
@@ -218,7 +215,10 @@ export default {
       depositt: "", //保证金
       Merchants: "", //商家用户名
       serving: "", //服务
-      id:'',//取到本身的id
+      id:'',//详情页取到本身的id
+
+      storeId:'',//店铺首页id
+      detailShopId:'',//店铺首页id获取
     };
   },
  
@@ -230,6 +230,15 @@ export default {
   },
 
   methods: {
+     goto_detailShop(storeId) {
+      //跳转到详情页
+      console.log(storeId);
+      this.$router.push({ 
+        path: "/detailShop" ,
+        name: 'detailShop', 
+        params: { storeId:storeId }
+      }); 
+    },
     fetchData() {
       axios
         .post(
@@ -245,6 +254,7 @@ export default {
           this.evaluation = res.data.result.appEvaluateDate; //评价
           this.depositt = res.data.result.appEvaluateDate; //保证金
           this.Merchants = res.data.result.goods_store.user; //商家用户名
+          this.detailShopId = res.data.result.goods_store; //商家用户名
           this.serving = res.data.result.storeScoreEntity; //物流和卖家服务
         })
         .catch(function(error) {
@@ -273,7 +283,7 @@ export default {
           $(".detailHead_text3").removeClass("active");
           $(".detailHead_text1").removeClass("active");
           $(".detailHead_text2").addClass("active");
-        } else if ($scrolltop >= 530) {
+        } else if ($scrolltop >= 420) {
           $(".detailHead_text1").removeClass("active");
           $(".detailHead_text2").removeClass("active");
           $(".detailHead_text3").addClass("active");
