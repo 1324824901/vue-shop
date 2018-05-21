@@ -153,6 +153,16 @@ export default {
         });
     },
 
+//     public static String getPictureBig(String path,String name,String ext) {
+// 		if (path.indexOf("data/files/store") != -1 ) {
+// 			path = "/gold/" + path+"/"+name;
+// 			return path;
+// 		}else {
+// 			name = "/"+ path+"/"+name;
+// 			return name;
+// 		}
+// //		return path+name;
+// 	}
     //自定义方法
     salesTab: function() {
       $(".nav .mint-button:first").addClass("active");

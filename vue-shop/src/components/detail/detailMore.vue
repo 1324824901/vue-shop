@@ -15,7 +15,6 @@
                 </div>
             </div>
 
-
             <ul class="detailMoreTabTitle">
                 <li>人气</li>
                 <li>价格
@@ -26,14 +25,14 @@
                 <li>时间</li>
             </ul>
             <ul class="detailMoreTabMain">
-                <li v-for="a in 10">
+                <li v-for="(data,index) in detailMoreList" :key="index">
                     <div class="detailMoreTabMainImg">
-                        <img src="../../assets/mIcon/img_ac_sales_list_bg.png" alt="">
+                        <img :src="'http://www.d1sc.com/'+data.goods_main_photo.path+'/'+data.goods_main_photo.name" alt="">
                     </div>
-                    <p>真珠美学石榴红利果蔬抗糖化美白饮品口服液抗衰老缩小毛孔真珠美学石榴红利果蔬抗糖化美白饮品口服液抗衰老缩小毛孔</p>
+                    <p>{{data.goods_name}}</p>
                     <div class="detailMoreTabMainSpan">
-                        <span>￥258.0</span>
-                        <span>销量：89</span>
+                        <span>￥{{data.goods_price}}</span>
+                        <span>销量：{{data.store_price}}</span>
                     </div>
                 </li>
             </ul>
@@ -43,8 +42,39 @@
 </template>
 
 <script>
+import axios from "axios";
+import qs from "qs";
 export default {
-
+    data(){
+        return{
+            storeId:'',//店铺id
+            goodsClassId:'',//商品类别id
+            detailMoreList:'',//商品列表
+        }
+    },
+    mounted(){
+        this.ShopList();
+    },
+    methods:{
+    ShopList() {
+      axios
+        .post(
+          "http://www.d1sc.com/getStoreClassGoods.htm",
+          qs.stringify({
+            storeId: this.$route.params.storeId,
+            goodsClassId: this.$route.params.goodsClassId,
+            currentPage:0
+          })
+        )
+        .then(res => {
+          console.log(res);
+            this.detailMoreList = res.data.result;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+    }
 }
 </script>
 
@@ -149,6 +179,7 @@ export default {
                 -webkit-box-orient: vertical;
             }
             .detailMoreTabMainSpan{
+                    position: relative;
                     margin-top: .28rem;
                     :nth-child(1){
                         font-size: .47rem;
@@ -157,8 +188,9 @@ export default {
                     }
                     :nth-child(2){
                         font-size: .29rem;
-                        margin-left: 1.42rem;
-                        color: #777777
+                        color: #777777;
+                        right: 0.4rem;
+                        position: absolute;
                     }
             }
         }

@@ -1,11 +1,11 @@
 <template>
   <div>
 
-    <div class="detailHead_left detailHeadImg">
+    <router-link to="/"><div class="detailHead_left detailHeadImg">
         <div class="detailHead_left_right_img">
           <img src="../../assets/mIcon/title_back_white.png" alt="">
         </div>
-      </div>
+      </div></router-link>
 
       <div class="detailHead_right detailHeadImg">
         <div class="detailHead_left_right_img">
@@ -166,7 +166,7 @@
                       <p>{{Merchants.userName}}</p>
                       <p>已缴纳保证金{{depositt.deposit}}元</p>
                   </div>
-                  <router-link to="/detail/detailShop"><button class="detailMainBtn">进店逛逛</button></router-link>
+                  <button class="detailMainBtn" @click="goto_detailShop(detailShopId.id)">进店逛逛</button>
               </div>
               <div class="detailMain6Ma">
                   <div>
@@ -191,7 +191,7 @@
       <div class="detailFoot">
         <div class="detailFootImgP">
             <div>
-                <img src="../../assets/mIcon/icon_bonus_list.png" alt="">
+                <img src="../../assets/mIcon/icon_bonus_list.png" alt=""  @click="goto_detailShop(detailShopId.id)">
             </div>
             <p @click="goto_detailShop(detailShopId.id)">店铺</p>
         </div>
@@ -216,7 +216,6 @@ export default {
       Merchants: "", //商家用户名
       serving: "", //服务
       id:'',//详情页取到本身的id
-
       storeId:'',//店铺首页id
       detailShopId:'',//店铺首页id获取
     };

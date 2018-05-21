@@ -34,8 +34,6 @@ export default new Router({
       name: "首页",
       component: Home
     },
-    
-
     {
       path: "/sharedGoods",
       name: "共享商品",
@@ -137,8 +135,8 @@ export default new Router({
       component: detailSearch
     },
     {
-      path: "/detailMore/:id",
-      name: "店铺搜索更多商品",
+      path: "/detailMore/:storeId/:goodsClassId",
+      name: "detailMore",
       component: detailMore
     },
     {
