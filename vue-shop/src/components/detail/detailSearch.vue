@@ -1,9 +1,9 @@
 <template>
 <div>
     <div class="detailSearch">
-        <router-link to="/detail/detailShop"><div class="detailSearchImg">
+        <div class="detailSearchImg" onclick="window.history.go(-1)">
             <img src="../../assets/mIcon/title_back_normal.png" alt="">
-        </div></router-link>
+        </div>
         <div class="detailSearchIpt">
             <div>
                 <img src="../../assets/mIcon/sousuoa4a4a4.png" alt="">

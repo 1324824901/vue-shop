@@ -264,7 +264,7 @@ export default {
   updated() {
     //只要数据变化就会判断一次数据是否已读过，判断标记的显隐
   },
-  created() {
+  mounted() {
     //打开页面首先自动获取一次数据
     this.path(1);
   }

@@ -1,11 +1,11 @@
 <template>
   <div>
 
-    <router-link to="/"><div class="detailHead_left detailHeadImg">
-        <div class="detailHead_left_right_img">
+    <div class="detailHead_left detailHeadImg">
+        <div class="detailHead_left_right_img"  onclick="window.history.go(-1)">
           <img src="../../assets/mIcon/title_back_white.png" alt="">
         </div>
-      </div></router-link>
+      </div>
 
       <div class="detailHead_right detailHeadImg">
         <div class="detailHead_left_right_img">
@@ -20,8 +20,6 @@
           <li class="detailHead_text3">详情</li>
         </ul>
     </div>
-
-    
 
       <div class="detailMain">
       
@@ -139,7 +137,7 @@
           <!-- ============================== -->
           <div class="detailMain4">
               <span class="detailMain3s_selectionSpan">商品评价({{evaluation.evaluateSum}})</span>
-              <span class="detailMain3s_selectionSpan1" v-show="evaluation.evaluate" >查看评价</span>
+              <router-link to="/detailEvaluation"><span class="detailMain3s_selectionSpan1" v-show="evaluation.evaluate">查看评价</span></router-link>
               <span class="detailMain3s_selectionSpan2"><img src="../../assets/mIcon/title_back_normal.png" alt=""></span>
           </div>
 

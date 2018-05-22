@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="sharedd">
-      <div class="back-withe shar">
-        <router-link to="/"><img src="../../assets/mIcon/title_back_white.png"></router-link>
+      <div class="back-withe shar" onclick="window.history.go(-1)">
+        <img src="../../assets/mIcon/title_back_white.png">
       </div>
       <div class="shar"><p>万手盈利榜</p></div>
     </div>

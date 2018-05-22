@@ -1,9 +1,9 @@
 <template>
 <div>
       <div class="header">
-        <router-link to="/detail"><div class="headerImg hh">
+        <div class="headerImg hh" onclick="window.history.go(-1)">
             <img src="../../assets/mIcon/title_back_white.png" alt="">
-        </div></router-link>
+        </div>
         <p class="headerP hh">
             评价
         </p>

@@ -3,10 +3,10 @@
         <div class="detailShopHead">
 
             <div class="detailShopHead1">
-                <div class="detailShopHead1Img">
+                <a><div class="detailShopHead1Img" onclick="window.history.go(-1)">
                     <img src="../../assets/mIcon/title_back_white.png" alt="">
-                </div>
-                <router-link to="/detail/detailSearch"><div class="detailShopHead1Ipt">
+                </div></a>
+                <router-link to="/detailSearch"><div class="detailShopHead1Ipt">
                     <div class="detailShopHead1IptImg">
                         <img src="../../assets/mIcon/sousuo.png" alt="">
                     </div>
@@ -52,7 +52,7 @@
             <li>
                 <p class="detailShopMainP" v-if="data.gc!=null">{{data.gc.className}}</p>
                 <p class="detailShopMainP" v-if="data.gc==null">无类别</p>
-                <p class="detailShopMainP1" @click="goto_detailMore(ShopCaution.user.id,data.gc.id)" v-if="data.gc">更多...</p>
+                <p class="detailShopMainP1" @click="goto_detailMore(ShopCaution.user.id,data.gc.id)" v-if="data.gc">更多…</p>
                 <div class="detailShopMainImg">
                     <img :src="'http://www.d1sc.com/'+data.goods_main_photo.path+'/'+data.goods_main_photo.name" alt="" @click="goto_detail(data.id)"/>
                 </div>

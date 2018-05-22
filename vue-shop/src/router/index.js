@@ -130,7 +130,7 @@ export default new Router({
       component: detailShop
     },
     {
-      path: "/detailSearch/:id",
+      path: "/detailSearch",
       name: "店铺搜索商品",
       component: detailSearch
     },
@@ -140,7 +140,7 @@ export default new Router({
       component: detailMore
     },
     {
-      path: "/detailEvaluation/:id",
+      path: "/detailEvaluation",
       name: "用户评价",
       component: detailEvaluation
     },
