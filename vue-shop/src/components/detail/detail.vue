@@ -3,13 +3,13 @@
 
     <div class="detailHead_left detailHeadImg">
         <div class="detailHead_left_right_img"  onclick="window.history.go(-1)">
-          <img src="../../assets/mIcon/title_back_white.png" alt="">
+          <img src="../../assets/mIcon/title_back_white.png" alt="" id="img111">
         </div>
       </div>
 
       <div class="detailHead_right detailHeadImg">
         <div class="detailHead_left_right_img">
-          <img src="../../assets/mIcon/title_back_white.png" alt="">
+          <img src="../../assets/mIcon/title_back_white.png" alt="" id="img222">
         </div>
       </div>
 
@@ -177,13 +177,7 @@
                   </div>
               </div>
           </div>
-
-          <div class="detailMain7">
-            　<frameset >
-　　　　    <frame src= "http://www.d1sc.com/api_goods_detail_view.htm?goods_id=78781"></frame>
-　　        </frameset>
-          </div>
-
+          
       </div>
 
       <div class="detailFoot">
@@ -198,7 +192,11 @@
             <span class="specification"  @click="selectionSpecificationShow()">立即购买</span>
         </div>
       </div>
+      <div class="aaaaaaaaaa">
+          <iframe :src="'http://www.d1sc.com/api_goods_detail_view.htm?'+webViewImg" frameborder="0"></iframe>
+      </div>
   </div>
+  
 </template>
 
 <script>
@@ -216,11 +214,14 @@ export default {
       id:'',//详情页取到本身的id
       storeId:'',//店铺首页id
       detailShopId:'',//店铺首页id获取
+      goods_id:'',//详情页描述取到本身的id
+      webViewImg:'',
     };
   },
  
   mounted() {
     this.fetchData();
+    this.detailWebView();
     this.clickHead();
   },
   created(){
@@ -259,6 +260,23 @@ export default {
         });
     },
 
+    detailWebView(){
+      axios
+        .get(
+          "http://www.d1sc.com/api_goods_detail_view.htm",
+          qs.stringify({
+            goods_id:this.$route.params.id
+          })
+        )
+        .then(res => {
+          console.log(res);
+          console.log(this.webViewImg = res.config[0]);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+
     // 头部的opacity值变化.优化
     clickHead: function() {
       //头部的点击到对应模块
@@ -272,6 +290,7 @@ export default {
       });
       var setCoverOpacity = function() {
         var $scrolltop = $(window).scrollTop();
+      //  console.log( $scrolltop);
         if ($scrolltop > 0 && $scrolltop < 371) {
           $(".detailHead_text3").removeClass("active");
           $(".detailHead_text2").removeClass("active");
@@ -284,12 +303,13 @@ export default {
           $(".detailHead_text1").removeClass("active");
           $(".detailHead_text2").removeClass("active");
           $(".detailHead_text3").addClass("active");
-        }
+        } 
         if ($scrolltop == 0) {
           $(".detailHead").css({
             opacity: 0,display: 'none'
           });
-        } else {
+          }
+         else {
           $(".detailHead").css({display: 'block',
             opacity: $scrolltop / 180 > 1 ? 1 : $scrolltop / 180
           });
@@ -325,6 +345,13 @@ export default {
   }
 </script>
 <style lang="scss">
+iframe{
+  width:100%;
+height:100%;
+html{
+  margin-top: 11rem;
+}
+}
 .detailHead_left {
   top: 1.11rem;
   left: 0.42rem;
@@ -613,12 +640,6 @@ export default {
         }
       }
     }
-  }
-  .detailMain7 {
-    position: absolute;
-    height: 20rem;
-    width: 100%;
-    top: 26rem;
   }
 
   .detailMain1s_selection1 {
