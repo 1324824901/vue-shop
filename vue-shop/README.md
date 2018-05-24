@@ -37,3 +37,5 @@ https://github.com/1324824901/vue-shop.git
 
 detailMore里的数据选择。
 图片的判断。
+二维数组的获取
+detailEvaluation里面的五角星。组件自定义函数传递

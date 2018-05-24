@@ -140,8 +140,8 @@ export default new Router({
       component: detailMore
     },
     {
-      path: "/detailEvaluation",
-      name: "用户评价",
+      path: "/detail/:id/detailEvaluation/:goodsId",
+      name: "detailEvaluation",
       component: detailEvaluation
     },
   ]

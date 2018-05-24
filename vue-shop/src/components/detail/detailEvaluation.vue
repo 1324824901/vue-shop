@@ -29,16 +29,16 @@
 
 
         <ul class="detailEvaluationTabMain2">
-            <li v-for="c in 20">
+            <li v-for="(data,index) in evaluationList" :key="index">
                 <div class="detailEvaluationTabMain2Img">
-                    <img src="../../assets/mIcon/icon_market_jixie.png" alt="">
+                    <img :src="'http://www.d1sc.com/'+data.user.photo.path+'/'+data.user.photo.name" alt="">
                 </div>
-                <p class="detailEvaluationTabMain2P">王艳霞</p>
+                <p class="detailEvaluationTabMain2P">{{data.user.userName}}</p>
                 <div class="detailEvaluationTabMain2Span">
-                    <span class="detailEvaluationTabMain2Span1" v-for="b in 5"><img src="../../assets/mIcon/Pentagram.png" alt=""></span>
-                    <span class="detailEvaluationTabMain2SpanTime">2018-04-28</span>
+                    <span class="detailEvaluationTabMain2Span1"><img src="../../assets/mIcon/Pentagram.png" alt=""></span>
+                    <span class="detailEvaluationTabMain2SpanTime">{{data.assessingDiscourse.assessingTime}}</span>
                 </div>
-                <p class="detailEvaluationTabMain2P1">好评</p>
+                <p class="detailEvaluationTabMain2P1">{{data.assessingDiscourse.assessingCharacter}}</p>
             </li>
         </ul>
     </div>
@@ -46,7 +46,38 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+import qs from "qs";
+export default {
+    data(){
+        return{
+            goodsId: "", //商品id
+            evaluationList:"",//评价列表内容
+        }
+    },
+    mounted() {
+    this.evaluation();
+    },
+    
+    methods:{
+        evaluation(){
+            axios
+            .post(
+            "http://www.d1sc.com/appGetGoodsEvaluates.htm",
+            qs.stringify({
+                goodsId:this.$route.params.goodsId
+            })
+            )
+            .then(res => {
+            console.log(res);
+            this.evaluationList = res.data.result; //评价
+            })
+            .catch(function(error) {
+            console.log(error);
+            });
+        },
+    }
+};
 </script>
 
 <style lang='scss'>
@@ -101,7 +132,6 @@ export default {};
       li{
          margin-top: .21rem;
          position: relative;
-         height: 2.46rem; 
          background: #fff;
          .detailEvaluationTabMain2Img{
              position: absolute;
@@ -109,6 +139,9 @@ export default {};
              height: .72rem;
              top: .46rem;
              left: .39rem;
+             img{
+                 border-radius: 100%;
+             }
          }
          .detailEvaluationTabMain2P{
              left: 1.5rem;
@@ -131,14 +164,15 @@ export default {};
                  color: #999999;
                  font-size: .35rem;
                  right: .4rem;
-                 top: .95rem;
+                 top: .7rem;
              }
          }
          .detailEvaluationTabMain2P1{
-             bottom: .31rem;
-             left: 1.25rem;
-             position: absolute;
-             font-size: .38rem;
+            font-size: .38rem;
+            margin-top: 1rem;
+            margin-left: 1.3rem;
+            width: 7rem;
+            padding-bottom: .2rem;
          }
       }
   }
