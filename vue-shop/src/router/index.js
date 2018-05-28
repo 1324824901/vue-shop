@@ -25,6 +25,7 @@ const detailSearch = resolve => require(['@/components/detail/detailSearch.vue']
 const detailMore = resolve => require(['@/components/detail/detailMore.vue'], resolve);
 const detailEvaluation = resolve => require(['@/components/detail/detailEvaluation.vue'], resolve);
 
+
 Vue.use(Router);
 export default new Router({
   routes: [

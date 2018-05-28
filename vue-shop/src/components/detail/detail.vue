@@ -136,37 +136,16 @@
               <!-- 主体二维数组 -->
             <div class="detailMain3sSkuMain">
               <div class="aaax">
-              <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
-                <h5>{{specifiList[0]}}</h5>
-                <ul>
-                  <li class="li1" v-for="(Lists,index) in specifiListt" :key="index"><p>{{Lists}}</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                  <li class="li1" ><p>皮红色</p></li>
-                </ul>
-              </div>
-              <div class="detailMain3sSkuMain1 detailMain3sSkuMainSec">
+                <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
+                  <h5>{{specifiList[0]}}</h5>
+                  <ul>
+                    <li class="li1" v-for="(Lists,index) in specifiListt" :key="index"><p>{{Lists}}</p></li>
+                  </ul>
+                </div>
+                <div class="detailMain3sSkuMain1 detailMain3sSkuMainSec">
                 <h5>{{specifiList[1]}}</h5>
                 <ul>
-                  <li class="li2" v-for="(Listss,index) in specifiListtt" :key="index"><p>{{Listss}}</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
-                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" v-for="(Listss,index) in specifiListtt" :key="index"><p @click="SkuClick()">{{Listss}}</p></li>
                 </ul>
               </div>
             <!--底部 -->
@@ -293,9 +272,9 @@ export default {
 
   methods: {
       //选则规格逻辑
+			
         // 加减
         detailPlus(){
-          console.log(1)
             var add = $(".add").siblings(".countNumber");
             add.val(parseInt(add.val())+1)
         },
@@ -451,7 +430,7 @@ export default {
     selectionSpecificationHide1: function() {
       $(".detailMain1s_selection").animate({ top: "19.2rem" }, 200);
       $(".detailMain1s_selection1").animate({ bottom: "-8.99rem" }, 200);
-    }
+    },
   }
 };
 </script>
@@ -1051,5 +1030,8 @@ export default {
       right: 0;
     }
   }
+}
+.active{
+  color:red;
 }
 </style>
