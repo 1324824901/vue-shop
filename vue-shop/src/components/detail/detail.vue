@@ -120,41 +120,66 @@
            <!-- 底部弹框分享选择规格 -->
           <div class="detailMain3s_selection1">
             <!-- //头部 -->
-            <div class="detailMain3sSkuHead">
-              <div class="detailMain3s_selection1Img"  @click="selectionSpecificationHide()">
-                <img src="../../assets/mIcon/icon_market_aihao.png" alt="">
+            <div class="detailMain3sSkuHead" @click="selectionSpecificationHide()">
+              <div class="detailMain3s_selection1Img">
+                <img :src="'http://www.d1sc.com/'+detailLbtImga.path+'/'+detailLbtImga.name" alt="">
               </div>
-              <div class="detailMain3s_selection1X" @click="selectionSpecificationHide()">
+              <div class="detailMain3sSkuHeadCenter">
+                  <p>￥{{titlePriceSales.store_price}}</p>
+                  <p>库存：{{titlePriceSales.goods_inventory}}件</p>
+                  <p>已选</p>
+              </div>
+              <div class="detailMain3s_selection1X">
                 <img src="../../assets/mIcon/xx.png" alt="">
               </div>
             </div>
-              <!-- 主体 -->
+              <!-- 主体二维数组 -->
             <div class="detailMain3sSkuMain">
-                  <div class="detailMain3sSkuMain">
-                      <h4>{{specifiList[0]}}</h4>
-                      <ul>
-                        <li v-for="(Lists,index) in specifiListt" :key="index">{{Lists[0]}}</li>
-                      </ul>
-                  </div>
-                  <div class="detailMain3sSkuMain">
-                      <h4>尺码</h4>
-                      <ul>
-                        <li>皮红色</li>
-                        <li>皮红色</li>
-                        <li>皮红色</li>
-                      </ul>
-                  </div>
-            </div>
-            <!-- 底部 -->
-            <div class="detailMain3sSkuFoot">
-              <h3 class="detailMain3s_selection1H">数量</h3>
-              <div class="count">
-                <span class="count-btn reduce">-</span>
-                <span class="count-btn countNumber">1</span>
-                <span class="count-btn add">+</span>
+              <div class="aaax">
+              <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
+                <h5>{{specifiList[0]}}</h5>
+                <ul>
+                  <li class="li1" v-for="(Lists,index) in specifiListt" :key="index"><p>{{Lists}}</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                  <li class="li1" ><p>皮红色</p></li>
+                </ul>
               </div>
+              <div class="detailMain3sSkuMain1 detailMain3sSkuMainSec">
+                <h5>{{specifiList[1]}}</h5>
+                <ul>
+                  <li class="li2" v-for="(Listss,index) in specifiListtt" :key="index"><p>{{Listss}}</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                  <li class="li2" ><p>XXL</p></li>
+                </ul>
+              </div>
+            <!--底部 -->
+              <div class="detailMain3sSkuFoot">
+                <h3 class="detailMain3s_selection1H aH">数量</h3>
+                <div class="count aH">
+                  <span class="count-btn reduce" @click="detailSign()">-</span>
+                  <input class="count-btn countNumber" value="0" readonly="readonly"/>
+                  <span class="count-btn add"  @click="detailPlus()">+</span>
+                </div>
+              </div>
+               </div>
             </div>
-
               <button type="submit" class="detailMain3s_selection1Btn">确定</button>  
             </div>
           <div class="detailMain3s_selection" @click="selectionSpecificationHide()"></div>
@@ -233,7 +258,8 @@ import qs from "qs";
 export default {
   data() {
     return {
-      detailLbtImg: [], //轮播
+      detailLbtImg: "", //轮播
+      detailLbtImga: "", //规格图片
       titlePriceSales: "", //标题，价格，销量
       evaluation: "", //评价
       depositt: "", //保证金
@@ -244,10 +270,18 @@ export default {
       detailShopId: "", //店铺首页id获取
       goods_id: "", //详情页描述取到本身的id
       webViewImg: "",
-      goodsId:"",//商品id跳转到评价
+      goodsId: "", //商品id跳转到评价
 
-      specifiList:"",//选择规格
-      specifiListt:"",
+      specifiList: "", //选择规格主体
+      specifiListt: "",//规格内容
+      specifiListtt: "",//规格内容
+
+
+
+      // //选择规格逻辑
+      // selectArr:[],//存放被选中的值
+      // shopItemInfo:{},//存放要和选中的值进行匹配的数据
+      // subIndex:[],
     };
   },
   mounted() {
@@ -256,9 +290,23 @@ export default {
     this.clickHead();
     this.detailSku();
   },
-  created() {},
 
   methods: {
+      //选则规格逻辑
+        // 加减
+        detailPlus(){
+          console.log(1)
+            var add = $(".add").siblings(".countNumber");
+            add.val(parseInt(add.val())+1)
+        },
+         detailSign(){
+            var reduce = $(".reduce").siblings(".countNumber");   
+            reduce.val(parseInt(reduce.val())-1)   
+            if(parseInt(reduce.val())<1){   
+                reduce.val(1);  
+            } 
+         },
+      //end
     goto_detailShop(storeId) {
       //跳转到详情页
       console.log(storeId);
@@ -269,16 +317,16 @@ export default {
       });
     },
     goto_evaluation(goodsId) {
-            //跳转到详情页
-            console.log(goodsId);
-            this.$router.push({
-                path: "/detailEvaluation",
-                name: "detailEvaluation",
-                params: { goodsId: goodsId }
-            });
-        },
+      //跳转到详情页
+      console.log(goodsId);
+      this.$router.push({
+        path: "/detailEvaluation",
+        name: "detailEvaluation",
+        params: { goodsId: goodsId }
+      });
+    },
 
-        // 详情主页
+    // 详情主页
     fetchData() {
       axios
         .post(
@@ -290,6 +338,7 @@ export default {
         .then(res => {
           console.log(res);
           this.detailLbtImg = res.data.result.goods_photos; //轮播
+          this.detailLbtImga = res.data.result.goods_photos[0]; //规格图片
           this.titlePriceSales = res.data.result; //标题，价格，销量
           this.evaluation = res.data.result.appEvaluateDate; //评价
           this.depositt = res.data.result.appEvaluateDate; //保证金
@@ -301,7 +350,7 @@ export default {
           console.log(error);
         });
     },
-      // 详情页描述
+    // 详情页描述
     detailWebView() {
       axios
         .get(
@@ -318,9 +367,9 @@ export default {
           console.log(error);
         });
     },
-      // 规格
-    detailSku(){
-        axios
+    // 规格
+    detailSku() {
+      axios
         .post(
           "http://www.d1sc.com/getSpecGoodsItems.htm",
           qs.stringify({
@@ -329,8 +378,9 @@ export default {
         )
         .then(res => {
           console.log(res);
-          this.specifiList = res.data.result.specifiList.spec_name_list;
-          this.specifiListt = res.data.result.specifiList.spec_prop;
+          this.specifiList = res.data.result.specifiList.spec_name_list;//规格标题
+          this.specifiListt = res.data.result.specifiList.spec_prop[0];//规格内容
+          this.specifiListtt = res.data.result.specifiList.spec_prop[1];//规格内容
         })
         .catch(function(error) {
           console.log(error);
@@ -401,23 +451,12 @@ export default {
     selectionSpecificationHide1: function() {
       $(".detailMain1s_selection").animate({ top: "19.2rem" }, 200);
       $(".detailMain1s_selection1").animate({ bottom: "-8.99rem" }, 200);
-    },
-    
+    }
   }
-
-
 };
 </script>
 <style lang="scss">
-#ifr{
-div{
-  img{
-    display:inline-block !important;
-    width:100% !important;
-  }
-}
-}
-  
+
 .detailHead_left {
   top: 1.11rem;
   left: 0.42rem;
@@ -653,6 +692,7 @@ div{
         height: 1.44rem;
         left: 0.45rem;
         top: 0.48rem;
+        
         img {
           width: 100%;
           height: 100%;
@@ -834,30 +874,95 @@ div{
     padding-bottom: 0.48rem;
     bottom: -13.5rem;
     height: 12.42rem;
-    .detailMain3s_selection1Img {
-      width: 3rem;
-      height: 3rem;
-      top: -0.6rem;
-      position: absolute;
+    .detailMain3sSkuHead {
+
+      .detailMain3s_selection1Img {
+        width: 3rem;
+        height: 3rem;
+        top: -0.6rem;
+        position: absolute;
+        border: .03rem solid #a3a3a3;
+      }
+      .detailMain3sSkuHeadCenter{
+        margin-left: 3.2rem;
+        :nth-child(1){
+          font-size: .45rem;
+          color: #f97314;
+          margin-top: .2rem;
+          padding-bottom: .25rem;
+        }
+        p{
+          padding-bottom: .15rem;
+        }
+      }
+      .detailMain3s_selection1X {
+        width: 0.66rem;
+        height: 0.66rem;
+        position: absolute;
+        right: 1rem;
+        top: 0.45rem;
+      }
     }
-    .detailMain3s_selection1X {
-      width: 0.66rem;
-      height: 0.66rem;
-      position: absolute;
-      right: 1rem;
-      top: 0.45rem;
-    }
+
+    .detailMain3sSkuMain{
+      margin-top: 1rem;
+      height: 7rem;
+      overflow:hidden;
+      .aaax{
+        height: 7rem;
+        overflow: auto;
+      .detailMain3sSkuMain1{
+        width: 9.8rem;
+        font-size: .24rem;
+        h5{
+          padding-bottom: .2rem;
+        }
+        ul{
+              display: flex;
+              -webkit-justify-content: space-between;
+              justify-content: space-around;
+              flex-wrap:wrap;//自动换行
+              justify-content:flex-start;//主轴对齐方式
+              align-content:flex-start;
+          li{
+                flex-basis:33%;
+                text-align: center;
+                margin: .2rem 0;
+                p{
+                padding: .2rem;
+                border-radius: .2rem;
+                display: inline-block;
+                background: #f1f0f0;
+                }
+          }
+          p:hover{
+            background: #f97314;
+            color: #fff;
+
+          }
+        }
+      }
+      .detailMain3sSkuMainfrist{
+        padding-bottom: .2rem;
+        border-bottom: .03rem solid;
+      }
+      .detailMain3sSkuMainSec{
+        padding-top: .1rem;
+      }
+      .detailMain3sSkuFoot{
+  height: 1rem;
+  margin-top: .5rem;
+  .aH{
+    float: left;
+  }
     .detailMain3s_selection1H {
       font-size: 0.45rem;
-      position: absolute;
-      top: 4.02rem;
-      left: 0.73rem;
       font-weight: normal;
+      line-height: 1rem;
+      margin-right: 1.1rem;
+      margin-left: 1rem;
     }
     .count {
-      position: absolute;
-      top: 3.78rem;
-      right: 1rem;
       .count-btn {
         display: inline-block;
         height: 0.9rem;
@@ -876,7 +981,10 @@ div{
         margin: 0 0.28rem;
         font-weight: normal;
       }
+  }
     }
+    }
+}
     .detailMain3s_selection1Btn {
       width: 9.84rem;
       height: 1.44rem;

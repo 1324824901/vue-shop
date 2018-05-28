@@ -243,7 +243,9 @@ export default {
       top: 0.24rem;
     }
     .detailShopMainP {
-      width: 1.8rem;
+      width: 1.6rem;
+      padding: 0 .2rem;
+      overflow: hidden;
     }
     .detailShopMainP1 {
       width: 1.5rem;
