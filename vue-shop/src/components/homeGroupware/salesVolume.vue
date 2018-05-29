@@ -195,7 +195,7 @@ export default {
 .nav1 {
   .mint-button-text {
     display: block;
-    line-height: 1.28rem;
+    line-height: .9rem;
   }
 }
 </style>

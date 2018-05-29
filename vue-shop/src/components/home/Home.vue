@@ -1,5 +1,8 @@
 <template>
  <div>
+        <div class="scroll" :class="{show:isActive}">
+            <div id="toTop" @click="toTop(step)">&lt;回到顶部</div>
+        </div>
     <!-- 搜索 -->
    <router-link to='./Search'><mt-search
    placeholder="输入商品名，店铺名"
@@ -7,7 +10,13 @@
 
    <!-- 上拉下拉 -->
  <div class="page-loadmore-wrapper" ref="wrapper"><!--:style="{ height: wrapperHeight + 'rem' }" -->
-    <mt-loadmore  :bottom-method="loadBottom" :bottom-all-loaded="bottomAllLoaded" ref="loadmore" @bottom-status-change="handleBottomChange" :auto-fill="false">
+    <mt-loadmore  
+    :bottom-method="loadBottom" 
+    :bottom-all-loaded="bottomAllLoaded" 
+    ref="loadmore" 
+    @bottom-status-change="handleBottomChange" 
+    bottomPullText="正在加载"
+    >
     <!-- 轮播 -->
 
     <mt-swipe :auto="3000" class="swipe1">
@@ -157,22 +166,28 @@
     </mt-swipe-item>
   </mt-swipe>
   
-  <div class="item-list">
-    <ul class="item-Ulist" v-for="(data,index) in homeItemList" :key="index" @click="goto_detail(data.defaultGoods.id)">
-      <li class="item-img"><img :src="'http://www.d1sc.com/'+data.defaultGoods.goods_main_photo.path+'/'+data.defaultGoods.goods_main_photo.name">
-      <li class="item-text">{{data.defaultGoods.goods_name}}</li>
-      <li class="item-price">
-        <p>供货价:&nbsp;<span class="i-price">{{data.defaultGoods.store_price}}</span>&nbsp;&nbsp;&nbsp;销量:&nbsp;<span>{{data.defaultGoods.goods_salenum
-}}</span></p>
-        <mt-button type="primary">立即购买</mt-button>
-      </li>
-    </ul>
-  </div>
+  <div class="homeMain">
+    <div class="item-list">
+        <ul class="item-Ulist" v-for="(data,index) in homeItemList" :key="index" @click="goto_detail(data.defaultGoods.id)">
+          <li class="item-img"><img v-lazy="'http://www.d1sc.com/'+data.defaultGoods.goods_main_photo.path+'/'+data.defaultGoods.goods_main_photo.name">
+          <li class="item-text">{{data.defaultGoods.goods_name}}</li>
+          <li class="item-price">
+            <p>供货价:&nbsp;<span class="i-price">{{data.defaultGoods.store_price}}</span>&nbsp;&nbsp;&nbsp;销量:&nbsp;<span>{{data.defaultGoods.goods_salenum}}</span></p>
+            <mt-button type="primary">立即购买</mt-button>
+          </li>
+        </ul>
+      </div>
 
-   <div class="item-list">
-    <ul class="item-Ulist" v-for="(data,index) in topics" :key="index" @click="goto_detail(data.defaultGoods.id)">
-      <li class="item-text">{{data.goods_name}}</li>
-    </ul>
+    <div class="item-list">
+      <ul class="item-Ulist" v-for="(data,index) in topics" :key="index" @click="goto_detail(data.id)">
+        <li class="item-img"><img v-lazy="'http://www.d1sc.com/'+data.goods_main_photo.path+'/'+data.goods_main_photo.name">
+        <li class="item-text">{{data.goods_name}}</li>
+        <li class="item-price">
+          <p>供货价:&nbsp;<span class="i-price">{{data.store_price}}</span>&nbsp;&nbsp;&nbsp;销量:&nbsp;<span>{{data.goods_salenum}}</span></p>
+          <mt-button type="primary">立即购买</mt-button>
+        </li>
+      </ul>
+    </div>
   </div>
 
 </mt-loadmore>
@@ -204,39 +219,57 @@
 import axios from "axios";
 import qs from "qs";
 export default {
+  props:{
+            step:{   //此数据是控制动画快慢的
+                type:Number,
+                default:50  
+            }
+        },
   data() {
     return {
+
+      isActive:false,//回到顶部
+
       lbtImgList: [], //首页轮播
       homeItemList: [], //首页商品
-      sharedGood: "",//首页共享
-      id:'',//详情页id
+      sharedGood: "", //首页共享
+      id: "", //详情页id
 
-        //上拉下拉==============
+      //上拉下拉==============
       currentPage: 0,
-      topics:[],
-      bottomAllLoaded:false,
+      topics: [],
+      bottomAllLoaded: false
       // wrapperHeight: 0
-        //上拉下拉==============
-
+      //上拉下拉==============
     };
   },
 
   methods: {
+    //回到顶部
+    toTop(i){
+        //参数i表示间隔的幅度大小，以此来控制速度
+        document.documentElement.scrollTop-=i;
+        if (document.documentElement.scrollTop>0) {
+            var c=setTimeout(()=>this.toTop(i),16);
+        }else {
+            clearTimeout(c);
+        }
+    },
+
     goto_detail(id) {
       //跳转到详情页
       console.log(id);
-      this.$router.push({ 
-        path: "/detail" ,
-        name: 'detail', 
-        params: { id:id }
-      }); 
+      this.$router.push({
+        path: "/detail",
+        name: "detail",
+        params: { id: id }
+      });
     },
-    
+
     //数据获取
     path() {
       axios
-        .post("http://www.d1sc.com/getHomePageDate.htm", qs.stringify({
-        }))
+        .post("http://www.d1sc.com/getHomePageDate.htm", qs.stringify({}))
         .then(res => {
           console.log(res);
           this.lbtImgList = res.data.result.homePageCarousel;
@@ -245,9 +278,8 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        }); 
+        });
     },
-
 
     //上拉下拉==================================================================================================
     handleBottomChange(status) {
@@ -261,35 +293,61 @@ export default {
       }, 1000);
     },
     getTopics() {
-      let params = qs.stringify(this.currentPage);
-      console.log("params",params);
-      axios.post('http://www.d1sc.com//app_loadGoodsBySales.htm' + params).then(response => {
-        console.log(response);
-        this.topics = this.topics.concat(response.data.result);
-        console.log(this.topics);
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-//==================================================================================================================
-
-
-
+      axios
+        .post(
+          "http://www.d1sc.com//app_loadGoodsBySales.htm",
+          qs.stringify({
+            currentPage: this.currentPage
+          })
+        )
+        .then(response => {
+          console.log(response);
+          this.topics = this.topics.concat(response.data.result);
+          console.log(this.topics);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+    //==================================================================================================================
   },
   updated() {
     //只要数据变化就会判断一次数据是否已读过，判断标记的显隐
   },
+  created(){
+    //回到顶部
+      var vm=this;
+      window.onscroll=function(){
+          if (document.documentElement.scrollTop>3000) {
+              vm.isActive=true;
+          }else {
+              vm.isActive=false;
+          }
+      }
+  },
   mounted() {
     //打开页面首先自动获取一次数据
-    this.path(1);
+    this.path();
     //上拉下拉
     // this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
   }
 };
 </script>
-<style>
+<style lang="scss">
 @import "../../../static/style/css/home.css";
 .page-loadmore-wrapper {
-    overflow: scroll
+  overflow: scroll;
+}
+.scroll {
+  position: fixed;
+  bottom: 2rem;
+  right: 0.4rem;
+  display: none;
+  z-index: 999;
+  font-size: .77rem;
+  color: red;
+}
+.show{
+    display: block;
 }
 </style>

@@ -27,7 +27,7 @@
             <ul class="detailMoreTabMain">
                 <li v-for="(data,index) in detailMoreList" :key="index">
                     <div class="detailMoreTabMainImg">
-                        <img :src="'http://www.d1sc.com/'+data.goods_main_photo.path+'/'+data.goods_main_photo.name" alt=""  @click="goto_detail(data.id)">
+                        <img v-lazy="'http://www.d1sc.com/'+data.goods_main_photo.path+'/'+data.goods_main_photo.name" alt=""  @click="goto_detail(data.id)">
                     </div>
                     <p>{{data.goods_name}}</p>
                     <div class="detailMoreTabMainSpan">

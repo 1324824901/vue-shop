@@ -92,11 +92,15 @@
         }
         .mint-button {
           height: 0.66rem;
+          
           width: 1.25rem;
           font-size: 0.36rem;
           padding: 0;
           position: absolute;
           right: 0.28rem;
+          .mint-button-text{
+            line-height: .66rem;
+          }
         }
         .salesTime {
           font-size: 0.34rem;

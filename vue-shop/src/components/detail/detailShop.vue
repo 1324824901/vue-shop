@@ -54,7 +54,7 @@
                 <p class="detailShopMainP" v-if="data.gc==null">无类别</p>
                 <p class="detailShopMainP1" @click="goto_detailMore(ShopCaution.user.id,data.gc.id)" v-if="data.gc">更多…</p>
                 <div class="detailShopMainImg">
-                    <img :src="'http://www.d1sc.com/'+data.goods_main_photo.path+'/'+data.goods_main_photo.name" alt="" @click="goto_detail(data.id)" v-if="data.goods_main_photo!=null"/>
+                    <img v-lazy="'http://www.d1sc.com/'+data.goods_main_photo.path+'/'+data.goods_main_photo.name" alt="" @click="goto_detail(data.id)" v-if="data.goods_main_photo!=null"/>
                     <img src="../../assets/mIcon/img_ac_sales_list_bg.png" alt="" @click="goto_detail(data.id)" v-if="data.goods_main_photo==null"/>
                 </div>
                 <p class="detailShopMainP2">{{data.goods_name}}</p>
