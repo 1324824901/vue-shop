@@ -222,7 +222,7 @@ export default {
   props:{
             step:{   //此数据是控制动画快慢的
                 type:Number,
-                default:50  
+                default:50
             }
         },
   data() {

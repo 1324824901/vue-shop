@@ -9,17 +9,18 @@
       <div class="search1">
         <p>商品</p>
       </div>
+      
       <div class="search1">
-        
         <div class="bottom-arrow">
           <img src="../../assets/mIcon/bottom-arrow.png">
         </div>
       </div>
+
       <div class="search1">
         <input type="text" placeholder="请输入要搜索的商品名称">
       </div>
       <div class="search1">
-      <button type="submit" class="mint-button11">搜索</button>               
+      <button type="submit" class="mint-button11">搜索</button>
       </div>
     </div>
     <div class="maskLayer"></div>
@@ -50,6 +51,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .search {
   height: 1.78rem;
   position: relative;
@@ -73,10 +75,10 @@ export default {
     }
     .bottom-arrow {
     position: absolute;
-      height: .24rem;
+      height: .34rem;
       width:.32rem;
-      left:2.96rem;
-      top: .7rem;
+      left:2.8rem;
+      top: .8rem;
     }
     input {
       outline: none;
@@ -110,7 +112,8 @@ export default {
 }
 .maskLayer {
   width: 10.8rem;
-  height: 17.4rem;
-  background: rgb(212, 212, 212);
+  height: 13.6rem;
+  background: #f7f7f7;
+  position: relative;
 }
 </style>

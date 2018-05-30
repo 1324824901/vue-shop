@@ -140,9 +140,6 @@
                   <h5>{{specifiList[0]}}</h5>
                   <ul>
                     <li class="li1" v-for="(Lists,index) in specifiListt" :key="index"><p>{{Lists}}</p></li>
-                    <li class="li1" v-for="(Lists,index) in specifiListt" :key="index"><p>{{Lists}}</p></li>
-                    <li class="li1" v-for="(Lists,index) in specifiListt" :key="index"><p>{{Lists}}</p></li>
-                    <li class="li1" v-for="(Lists,index) in specifiListt" :key="index"><p>{{Lists}}</p></li>
                   </ul>
                 </div>
                 <div class="detailMain3sSkuMain1 detailMain3sSkuMainSec">

@@ -23,10 +23,10 @@
             <!-- cell组件 -->
             
           <mt-cell v-for="(data,index) in daySalesVolume" :key="index">
-              <div class="salesVolumeImg">
+              <div class="salesVolumeImg" @click="goto_detailSales(data[0])">
                   <img :src="'http://www.d1sc.com/'+data[4]+'/'+data[5]">
               </div>
-              <div class="salesVolumeP">
+              <div class="salesVolumeP" @click="goto_detailSales(data[0])">
                   <p>{{data[1]}}</p>
                   <span class="salesPrice">￥{{data[3]}}</span>
                   <div class="salesVB">
@@ -40,10 +40,10 @@
         <mt-tab-container-item id="tab-container2">
             <!-- cell组件 -->
           <mt-cell v-for="(data,index) in daySalesVolume" :key="index">
-              <div class="salesVolumeImg">
+              <div class="salesVolumeImg" @click="goto_detailSales(data[0])">
                   <img :src="'http://www.d1sc.com/'+data[4]+'/'+data[5]">
               </div>
-              <div class="salesVolumeP">
+              <div class="salesVolumeP" @click="goto_detailSales(data[0])">
                   <p>{{data[1]}}</p>
                   <span class="salesPrice">￥{{data[3]}}</span>
                   <div class="salesVB">
@@ -56,10 +56,10 @@
         <mt-tab-container-item id="tab-container3">
             <!-- cell组件 -->
           <mt-cell v-for="(data,index) in daySalesVolume" :key="index">
-              <div class="salesVolumeImg">
+              <div class="salesVolumeImg" @click="goto_detailSales(data[0])">
                   <img :src="'http://www.d1sc.com/'+data[4]+'/'+data[5]">
               </div>
-              <div class="salesVolumeP">
+              <div class="salesVolumeP" @click="goto_detailSales(data[0])">
                   <p>{{data[1]}}</p>
                   <span class="salesPrice">￥{{data[3]}}</span>
                   <div class="salesVB">
@@ -72,11 +72,11 @@
         <mt-tab-container-item id="tab-container4">
             <!-- cell组件 -->
           <mt-cell v-for="(data,index) in alwaysSalesVolume" :key="index">
-             <div class="salesVolumeImg">
+             <div class="salesVolumeImg" @click="goto_detailSales(data.id)">
                  <img :src="'http://www.d1sc.com/'+data.goods_main_photo
 .path+'/'+data.goods_main_photo.name">
              </div>
-             <div class="salesVolumeP">
+              <div class="salesVolumeP" @click="goto_detailSales(data.id)">
                   <p>{{data.goods_name}}</p>
                   <span class="salesPrice">￥{{data.store_price}}</span>
                   <div class="salesVB">
@@ -101,27 +101,37 @@ export default {
       daySalesVolume: [], //销量
       alwaysSalesVolume: [], //总销量
       choice:0,
+      id:"",//详情页id
     };
   },
   watch:{
     active:function(){
       if(this.active=='tab-container1'){
         this.choice=0;
-        this.path()
+        this.path();
       }
-          else if(this.active=='tab-container2'){
+      else if(this.active=='tab-container2'){
         this.choice=1;
-        this.path()
+        this.path();
       }
            else if(this.active=='tab-container3'){
         this.choice=2;
-        this.path()
+        this.path();
       }else if(this.active=='tab-container4'){
         this.allPath();
       }
     }
   },
   methods: {
+    goto_detailSales(id) {
+      //跳转到详情页
+      console.log(id);
+      this.$router.push({
+        path: "/detail",
+        name: "detail",
+        params: { id: id }
+      });
+    },
     //数据获取
     path() {
       axios
@@ -153,16 +163,6 @@ export default {
         });
     },
 
-//     public static String getPictureBig(String path,String name,String ext) {
-// 		if (path.indexOf("data/files/store") != -1 ) {
-// 			path = "/gold/" + path+"/"+name;
-// 			return path;
-// 		}else {
-// 			name = "/"+ path+"/"+name;
-// 			return name;
-// 		}
-// //		return path+name;
-// 	}
     //自定义方法
     salesTab: function() {
       $(".nav .mint-button:first").addClass("active");
@@ -196,6 +196,7 @@ export default {
   .mint-button-text {
     display: block;
     line-height: .9rem;
+    font-size: .34rem;
   }
 }
 </style>

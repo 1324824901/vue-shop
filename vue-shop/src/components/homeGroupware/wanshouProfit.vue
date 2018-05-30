@@ -196,6 +196,7 @@ export default {
   .mint-button-text {
     display: block;
     line-height: .9rem;
+    font-size: .34rem;
   }
 }
 </style>
