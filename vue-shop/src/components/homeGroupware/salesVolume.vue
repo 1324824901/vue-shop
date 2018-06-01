@@ -18,7 +18,7 @@
     </div>  
       
     <div class="page-tab-container">
-      <mt-tab-container class="page-tabbar-tab-container" v-model="active" swipeable><!-- // -->
+      <mt-tab-container class="page-tabbar-tab-container" v-model="active" ><!-- swipeable -->
         <mt-tab-container-item id="tab-container1">
             <!-- cell组件 -->
             

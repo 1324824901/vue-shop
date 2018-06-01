@@ -1,5 +1,6 @@
 <template>
     <div>
+ 
         <div class="detailShopHead">
 
             <div class="detailShopHead1">
@@ -17,11 +18,11 @@
 
             <div class="detailShopHead2" v-if="ShopCaution">
                 <div class="detailShopHead2Img">
-                    <img :src="'http://www.d1sc.com/'+ShopCaution.user.photo.path+'/'+ShopCaution.user.photo.name" alt="" v-if="ShopCaution.user.photo!=null"/>
-                    <img src="../../assets/mIcon/icon_yonghu.png" alt="" v-if="ShopCaution.user.photo==null"/>
+                    <img :src="'http://www.d1sc.com/'+ShopCaution.user.photo.path+'/'+ShopCaution.user.photo.name" alt="" v-if="ShopCaution.user!=null||ShopCaution.user.photo!=null"/>
+                    <img src="../../assets/mIcon/icon_yonghu.png" alt="" v-if="ShopCaution.user.photo==null||ShopCaution.user==null"/>
                 </div>
                 <h3>{{ShopCaution.store.store_name}}</h3>
-                <p class="detailShopHead2P">{{ShopCaution.user.userName}} {{ShopCaution.bumen.name}} {{ShopCaution.zhiWei.name}} {{ShopCaution.zhiXian.name}}</p>
+                <p class="detailShopHead2P" v-if="ShopCaution.user!=null">{{ShopCaution.user.userName}} {{ShopCaution.bumen.name}} {{ShopCaution.zhiWei.name}} {{ShopCaution.zhiXian.name}}</p>
             </div>
 
             <ul class="detailShopHead3">
@@ -47,7 +48,15 @@
                 </div>
                 <p>已缴纳保证金{{ShopCaution.bail}}元，出现问题先行赔付，请勿线下交易！</p>
         </div>
-        
+                    <!-- 上拉下拉 -->
+ <div class="page-loadmore-wrapper" ref="wrapper"><!--:style="{ height: wrapperHeight + 'rem' }" -->
+    <mt-loadmore  
+    :bottom-method="loadBottom" 
+    :bottom-all-loaded="bottomAllLoaded" 
+    ref="loadmore" 
+    @bottom-status-change="handleBottomChange" 
+    :auto-fill="false"
+    >
         <div class="detailShopMain" v-for="(data,index) in ShopList" :key="index">
             <li>
                 <p class="detailShopMainP" v-if="data.gc!=null">{{data.gc.className}}</p>
@@ -66,6 +75,9 @@
                 </div>
             </li>
         </div>
+      </mt-loadmore>
+    </div>
+<!-- =========================== -->
     </div>
 </template>
 
@@ -75,18 +87,37 @@ import qs from "qs";
 export default {
   data() {
     return {
-      ShopCaution: "", //保证金和头部个人信息
-      ShopList: "",//商品列表
+      ShopCaution:'', //保证金和头部个人信息
+      ShopList: [],//商品列表
       storeId: "", //取到本身的id
       id: "", //跳转详情页id
       aId:'',//跳转到detailMore
       bId:'',
+         //上拉下拉==============
+      currentPage: 0,
+      bottomAllLoaded:false,
+      // wrapperHeight: 0
+        //上拉下拉==============
     };
   },
   mounted() {
+    this.personalMal();
     this.personalMall();
   },
   methods: {
+
+      //上拉下拉==================================================================================================
+      handleBottomChange(status) {
+        this.bottomStatus = status;
+      },
+      loadBottom() {
+        setTimeout(() => {
+          this.currentPage++;
+          this.personalMall();
+          this.$refs.loadmore.onBottomLoaded();
+        }, 1000);
+      },
+
       goto_detailMore(aId,bId) {
       //跳转到detailMore
       console.log(aId,bId);
@@ -105,18 +136,34 @@ export default {
         params: { id: id }
       });
     },
+    personalMal() {
+      axios
+        .post(
+          "http://www.d1sc.com/getStoreHomePage.htm",
+          qs.stringify({
+            storeId: this.$route.params.storeId,
+          })
+        )
+        .then(res => {
+          console.log(res);
+           this.ShopCaution =res.data.result; //保证金和头部个人信息
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     personalMall() {
       axios
         .post(
           "http://www.d1sc.com/getStoreHomePage.htm",
           qs.stringify({
-            storeId: this.$route.params.storeId
+            storeId: this.$route.params.storeId,
+            currentPage:this.currentPage,
           })
         )
         .then(res => {
           console.log(res);
-          this.ShopCaution = res.data.result; //保证金和头部个人信息
-          this.ShopList = res.data.result.goods; //保证金和头部个人信息
+           this.ShopList =this.ShopList.concat(res.data.result.goods); //商品列表
         })
         .catch(function(error) {
           console.log(error);

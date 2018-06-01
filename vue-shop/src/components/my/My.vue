@@ -23,7 +23,7 @@
       <!-- 1 -->
       <div class="main1">
         <p class="p1">商城订单</p>
-        <p class="p2">查看所有订单</p>
+        <router-link to="/my/myorder"><p class="p2">查看所有订单</p></router-link>
         <p class="p3"><img src="../../assets/mIcon/title_back_normal.png" alt=""></p>
       </div>
       <!-- 2 -->

@@ -26,6 +26,12 @@ const detailMore = resolve => require(['@/components/detail/detailMore.vue'], re
 const detailEvaluation = resolve => require(['@/components/detail/detailEvaluation.vue'], resolve);
 
 
+
+const sku = resolve => require(['@/components/aaaaaaa/sku.vue'], resolve);
+const load = resolve => require(['@/components/public/load.vue'], resolve);
+const searchh = resolve => require(['@/components/public/searchh.vue'], resolve);
+
+
 Vue.use(Router);
 export default new Router({
   routes: [
@@ -35,6 +41,27 @@ export default new Router({
       name: "首页",
       component: Home
     },
+
+
+
+    {
+      path: "/sku",
+      name: "sku",
+      component: sku
+    },
+    {
+      path: "/load",
+      name: "load",
+      component: load
+    },
+    {
+      path: "/searchh",
+      name: "searchh",
+      component: searchh
+    },
+
+
+
     {
       path: "/sharedGoods",
       name: "共享商品",

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-       <div class="headerImg hh">
+       <div class="headerImg hh" onclick="window.history.go(-1)">
             <img src="../../assets/mIcon/title_back_white.png" alt="">
        </div>
        <p class="headerP hh">
@@ -12,7 +12,7 @@
        </div>
     </div>
 
-    <div class="nav nav1" @click="salesTab()">
+    <div class="nav nav1">
       <mt-button size="small" @click.native.prevent="active = 'tab-container1'">全部</mt-button>  
       <mt-button size="small" @click.native.prevent="active = 'tab-container2'">待付款</mt-button>
       <mt-button size="small" @click.native.prevent="active = 'tab-container3'">待发货</mt-button>  
@@ -68,8 +68,26 @@ export default {
       active: "tab-container1"
     };
   },
+  watch:{
+    active:function(){
+      if(this.active=='tab-container1'){
+        this.path();
+      }
+      else if(this.active=='tab-container2'){
+        this.choice=1;
+        this.path();
+      }
+           else if(this.active=='tab-container3'){
+        this.choice=2;
+        this.path();
+      }else if(this.active=='tab-container4'){
+        this.allPath();
+      }
+    }
+  },
   methods: {
-      salesTab: function() {
+      //切换、
+      orderTab: function() {
       $(".nav .mint-button:first").addClass("active");
       $(".nav .mint-button").click(function() {
         $(".nav .mint-button").removeClass("active");
@@ -77,6 +95,9 @@ export default {
         return false;
       });
     },
+  },
+  mounted(){
+      this.orderTab();
   }
 };
 </script>

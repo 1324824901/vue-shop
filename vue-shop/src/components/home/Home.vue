@@ -9,13 +9,17 @@
    ></mt-search></router-link>
 
    <!-- 上拉下拉 -->
- <div class="page-loadmore-wrapper" ref="wrapper"><!--:style="{ height: wrapperHeight + 'rem' }" -->
-    <mt-loadmore  
+ <div class="page-loadmore-wrapper" ref="wrapper">
+    <mt-loadmore 
+    :top-method="loadTop" 
+    @translate-change="translateChange" 
+    @top-status-change="handleTopChange" 
     :bottom-method="loadBottom" 
-    :bottom-all-loaded="bottomAllLoaded" 
-    ref="loadmore" 
     @bottom-status-change="handleBottomChange" 
-    bottomPullText="正在加载"
+    :bottom-all-loaded="allLoaded" 
+    ref="loadmore"
+    bottomLoadingText="正在加载..."
+    topLoadingText="正在加载..."
     >
     <!-- 轮播 -->
 
@@ -189,9 +193,20 @@
       </ul>
     </div>
   </div>
-
-</mt-loadmore>
- </div>
+        <!-- <div slot="top" class="mint-loadmore-top">
+          <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }">↓</span>
+          <span v-show="topStatus === 'loading'">正在刷新...
+                <mt-spinner type="snake"></mt-spinner>
+            </span>
+        </div>
+        <div slot="bottom" class="mint-loadmore-bottom">
+          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+          <span v-show="bottomStatus === 'loading'">正在刷新...
+                <mt-spinner type="snake"></mt-spinner>
+            </span>
+        </div> -->
+    </mt-loadmore>
+</div>
 
 <!-- 底部导航 -->
     <div class="tabfoot" >
@@ -219,7 +234,7 @@
 import axios from "axios";
 import qs from "qs";
 export default {
-  props:{
+  props:{//回到顶部
             step:{   //此数据是控制动画快慢的
                 type:Number,
                 default:50
@@ -227,19 +242,20 @@ export default {
         },
   data() {
     return {
-
       isActive:false,//回到顶部
-
       lbtImgList: [], //首页轮播
       homeItemList: [], //首页商品
       sharedGood: "", //首页共享
       id: "", //详情页id
-
+      topics: [],//上拉加载的列表
       //上拉下拉==============
       currentPage: 0,
-      topics: [],
-      bottomAllLoaded: false
-      // wrapperHeight: 0
+      allLoaded: false,
+      bottomStatus: '',
+      wrapperHeight: 0,
+      topStatus: '',
+      translate: 0,
+      moveTranslate: 0,
       //上拉下拉==============
     };
   },
@@ -250,7 +266,7 @@ export default {
         //参数i表示间隔的幅度大小，以此来控制速度
         document.documentElement.scrollTop-=i;
         if (document.documentElement.scrollTop>0) {
-            var c=setTimeout(()=>this.toTop(i),16);
+            var c=setTimeout(()=>this.toTop(i),0);
         }else {
             clearTimeout(c);
         }
@@ -285,13 +301,32 @@ export default {
     handleBottomChange(status) {
       this.bottomStatus = status;
     },
+    handleTopChange(status) {
+        this.moveTranslate = 1;
+        this.topStatus = status;
+    },
+    translateChange(translate) {
+        const translateNum = +translate;
+        this.translate = translateNum.toFixed(2);
+        this.moveTranslate = (1 + translateNum / 70).toFixed(2);
+    },
+    loadTop() {
+        setTimeout(() => {
+          this.$refs.loadmore.onTopLoaded();
+        }, 1500);
+      },
     loadBottom() {
       setTimeout(() => {
+          if(this.topics!=null){
         this.currentPage++;
         this.getTopics();
+          }else {
+            this.allLoaded = true;
+          }
         this.$refs.loadmore.onBottomLoaded();
       }, 1000);
     },
+    //==================================================================================================================
     getTopics() {
       axios
         .post(
@@ -309,12 +344,15 @@ export default {
           console.log(error);
         });
     }
-    //==================================================================================================================
+    
   },
   updated() {
     //只要数据变化就会判断一次数据是否已读过，判断标记的显隐
   },
   created(){
+    //打开页面首先自动获取一次数据
+      this.path();
+
     //回到顶部
       var vm=this;
       window.onscroll=function(){
@@ -325,19 +363,11 @@ export default {
           }
       }
   },
-  mounted() {
-    //打开页面首先自动获取一次数据
-    this.path();
-    //上拉下拉
-    // this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
-  }
 };
 </script>
 <style lang="scss">
 @import "../../../static/style/css/home.css";
-.page-loadmore-wrapper {
-  overflow: scroll;
-}
+
 .scroll {
   position: fixed;
   bottom: 2rem;

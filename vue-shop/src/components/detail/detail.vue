@@ -2,7 +2,7 @@
   <div>
 
     <div class="detailHead_left detailHeadImg" onclick="window.history.go(-1)">
-        <div class="detailHead_left_right_img" >
+        <div class="detailHead_left_right_img">
           <img src="../../assets/mIcon/title_back_white.png" alt="" id="img111">
         </div>
       </div>
@@ -26,7 +26,7 @@
         <div class="detailSwipe aaasss">
               <mt-swipe :auto="4000">
                 <mt-swipe-item v-for="(data,index) in detailLbtImg" :key="index">
-                    <img :src="'http://www.d1sc.com/'+data.path+'/'+data.name">
+                    <img :src="'http://www.d1sc.com/'+data.path+'/'+data.name" v-if="data!=undefined">
                 </mt-swipe-item>
               </mt-swipe>
             </div>
@@ -122,7 +122,7 @@
             <!-- //头部 -->
             <div class="detailMain3sSkuHead" @click="selectionSpecificationHide()">
               <div class="detailMain3s_selection1Img">
-                <img :src="'http://www.d1sc.com/'+detailLbtImga.path+'/'+detailLbtImga.name" alt="">
+                <img :src="'http://www.d1sc.com/'+detailLbtImga.path+'/'+detailLbtImga.name" alt="" v-if="detailLbtImga!=undefined">
               </div>
               <div class="detailMain3sSkuHeadCenter">
                   <p>￥{{titlePriceSales.store_price}}</p>
@@ -136,16 +136,27 @@
               <!-- 主体二维数组 -->
             <div class="detailMain3sSkuMain">
               <div class="aaax">
-                <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
+                <!-- <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
                   <h5>{{specifiList[0]}}</h5>
                   <ul>
-                    <li class="li1" v-for="(Lists,index) in specifiListt" :key="index"><p>{{Lists}}</p></li>
+                    <li class="li1" v-for="(Lists,index) in specifiListt" :key="index" ><p v-bind="handleNormalClickFrist()">{{Lists}}</p></li>
                   </ul>
                 </div>
                 <div class="detailMain3sSkuMain1 detailMain3sSkuMainSec">
                 <h5>{{specifiList[1]}}</h5>
                 <ul>
-                  <li class="li2" v-for="(Listss,index) in specifiListtt" :key="index"><p @click="SkuClick()">{{Listss}}</p></li>
+                  <li class="li2" v-for="(Listss,index) in specifiListtt" :key="index"><p v-bind="handleNormalClick()">{{Listss}}</p></li>
+                </ul>
+              </div> -->
+              <div class="sku">
+                <ul class="skuUl">
+                  <li class="skuLi" v-for="(Lists,index) in specNameList" :key="index">{{Lists}}
+                  <div class="skuDiv" v-for="(Listss,index) in specProp" :key="index"><!--规格1-->
+                      <li class="skuLi1" v-for="(Listsss,index) in Listss" :key="index"><!--规格2-->
+                        {{Listsss}}
+                      </li>
+                    </div>
+                  </li><!--标题-->
                 </ul>
               </div>
             <!--底部 -->
@@ -251,9 +262,8 @@ export default {
       webViewImg: "",
       goodsId: "", //商品id跳转到评价
 
-      specifiList: "", //选择规格主体
-      specifiListt: "",//规格内容
-      specifiListtt: "",//规格内容
+      specNameList: [], //选择规格标题
+      specProp: [],//规格内容
 
 
 
@@ -272,7 +282,24 @@ export default {
 
   methods: {
       //选则规格逻辑
-			
+			// /**
+			//  * 正常属性点击
+			//  */
+			// handleNormalClickFrist() {
+      //   $(".li1").click(function() {
+      //     $(".li1").removeClass("active");
+      //     $(this).addClass("active");
+      //     return false;
+      //   });
+      // },
+      // 	handleNormalClick() {
+      //   $(".li2").click(function() {
+      //     $(".li2").removeClass("active");
+      //     $(this).addClass("active");
+      //     return false;
+      //   });
+      // },
+      
         // 加减
         detailPlus(){
             var add = $(".add").siblings(".countNumber");
@@ -357,9 +384,8 @@ export default {
         )
         .then(res => {
           console.log(res);
-          this.specifiList = res.data.result.specifiList.spec_name_list;//规格标题
-          this.specifiListt = res.data.result.specifiList.spec_prop[0];//规格内容
-          this.specifiListtt = res.data.result.specifiList.spec_prop[1];//规格内容
+          this.specNameList = res.data.result.specifiList.spec_name_list;//规格标题
+          this.specProp = res.data.result.specifiList.spec_prop;//规格内容
         })
         .catch(function(error) {
           console.log(error);
@@ -890,44 +916,47 @@ export default {
       .aaax{
         height: 7rem;
         overflow: auto;
-      .detailMain3sSkuMain1{
-        width: 9.8rem;
-        font-size: .24rem;
-        h5{
-          padding-bottom: .2rem;
-        }
-        ul{
-              display: flex;
-              -webkit-justify-content: space-between;
-              justify-content: space-around;
-              flex-wrap:wrap;//自动换行
-              justify-content:flex-start;//主轴对齐方式
-              align-content:flex-start;
-          li{
-                flex-basis:33%;
-                text-align: center;
-                margin: .2rem 0;
-                p{
-                padding: .2rem;
-                border-radius: .2rem;
-                display: inline-block;
-                background: #f1f0f0;
-                }
-          }
-          p:hover{
-            background: #f97314;
-            color: #fff;
-
-          }
-        }
-      }
-      .detailMain3sSkuMainfrist{
-        padding-bottom: .2rem;
-        border-bottom: .03rem solid;
-      }
-      .detailMain3sSkuMainSec{
-        padding-top: .1rem;
-      }
+      // .detailMain3sSkuMain1{
+      //   width: 9.8rem;
+      //   font-size: .24rem;
+      //   h5{
+      //     padding-bottom: .2rem;
+      //   }
+      //   ul{
+      //         display: flex;
+      //         -webkit-justify-content: space-between;
+      //         justify-content: space-around;
+      //         flex-wrap:wrap;//自动换行
+      //         justify-content:flex-start;//主轴对齐方式
+      //         align-content:flex-start;
+      //     li{
+      //           flex-basis:33%;
+      //           text-align: center;
+      //           margin: .2rem 0;
+      //           p{
+      //           padding: .2rem;
+      //           border-radius: .2rem;
+      //           display: inline-block;
+      //           background: #f1f0f0;
+      //           font-size: .34rem;
+      //           }
+      //     }
+      //     .active{
+      //         p{
+      //             background: #f97314;
+      //             color: #fff;
+      //           }
+      //       }
+         
+      //   }
+      // }
+      // .detailMain3sSkuMainfrist{
+      //   padding-bottom: .2rem;
+      //   border-bottom: .03rem solid;
+      // }
+      // .detailMain3sSkuMainSec{
+      //   padding-top: .1rem;
+      // }
       .detailMain3sSkuFoot{
   height: 1rem;
   margin-top: .5rem;
@@ -1031,7 +1060,5 @@ export default {
     }
   }
 }
-.active{
-  color:red;
-}
+
 </style>
