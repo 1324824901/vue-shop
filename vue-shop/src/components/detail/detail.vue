@@ -136,7 +136,7 @@
               <!-- 主体二维数组 -->
             <div class="detailMain3sSkuMain">
               <div class="aaax">
-                <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
+                <!-- <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
                   <h5>{{specifiList[0]}}</h5>
                   <ul>
                     <li class="li1" v-for="(Lists,index) in specifiListt" :key="index" ><p v-bind="handleNormalClickFrist()">{{Lists}}</p></li>
@@ -147,7 +147,7 @@
                 <ul>
                   <li class="li2" v-for="(Listss,index) in specifiListtt" :key="index"><p v-bind="handleNormalClick()">{{Listss}}</p></li>
                 </ul>
-              </div>
+              </div> -->
               <!--<div class="sku">
                 <ul class="skuUl">
                   <li class="skuLi" v-for="(Lists,index) in specNameList" :key="index">
