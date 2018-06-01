@@ -136,7 +136,7 @@
               <!-- 主体二维数组 -->
             <div class="detailMain3sSkuMain">
               <div class="aaax">
-                <!-- <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
+                <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
                   <h5>{{specifiList[0]}}</h5>
                   <ul>
                     <li class="li1" v-for="(Lists,index) in specifiListt" :key="index" ><p v-bind="handleNormalClickFrist()">{{Lists}}</p></li>
@@ -147,18 +147,18 @@
                 <ul>
                   <li class="li2" v-for="(Listss,index) in specifiListtt" :key="index"><p v-bind="handleNormalClick()">{{Listss}}</p></li>
                 </ul>
-              </div> -->
-              <div class="sku">
+              </div>
+              <!--<div class="sku">
                 <ul class="skuUl">
-                  <li class="skuLi" v-for="(Lists,index) in specNameList" :key="index">{{Lists}}
-                  <div class="skuDiv" v-for="(Listss,index) in specProp" :key="index"><!--规格1-->
-                      <li class="skuLi1" v-for="(Listsss,index) in Listss" :key="index"><!--规格2-->
+                  <li class="skuLi" v-for="(Lists,index) in specNameList" :key="index">
+                  <div class="skuDiv" v-for="(Listss,index) in specProp" :key="index">
+                      <li class="skuLi1" v-for="(Listsss,index) in Listss" :key="index">
                         {{Listsss}}
                       </li>
                     </div>
-                  </li><!--标题-->
+                  </li>标题
                 </ul>
-              </div>
+              </div>-->
             <!--底部 -->
               <div class="detailMain3sSkuFoot">
                 <h3 class="detailMain3s_selection1H aH">数量</h3>
@@ -916,47 +916,47 @@ export default {
       .aaax{
         height: 7rem;
         overflow: auto;
-      // .detailMain3sSkuMain1{
-      //   width: 9.8rem;
-      //   font-size: .24rem;
-      //   h5{
-      //     padding-bottom: .2rem;
-      //   }
-      //   ul{
-      //         display: flex;
-      //         -webkit-justify-content: space-between;
-      //         justify-content: space-around;
-      //         flex-wrap:wrap;//自动换行
-      //         justify-content:flex-start;//主轴对齐方式
-      //         align-content:flex-start;
-      //     li{
-      //           flex-basis:33%;
-      //           text-align: center;
-      //           margin: .2rem 0;
-      //           p{
-      //           padding: .2rem;
-      //           border-radius: .2rem;
-      //           display: inline-block;
-      //           background: #f1f0f0;
-      //           font-size: .34rem;
-      //           }
-      //     }
-      //     .active{
-      //         p{
-      //             background: #f97314;
-      //             color: #fff;
-      //           }
-      //       }
+      .detailMain3sSkuMain1{
+        width: 9.8rem;
+        font-size: .24rem;
+        h5{
+          padding-bottom: .2rem;
+        }
+        ul{
+              display: flex;
+              -webkit-justify-content: space-between;
+              justify-content: space-around;
+              flex-wrap:wrap;//自动换行
+              justify-content:flex-start;//主轴对齐方式
+              align-content:flex-start;
+          li{
+                flex-basis:33%;
+                text-align: center;
+                margin: .2rem 0;
+                p{
+                padding: .2rem;
+                border-radius: .2rem;
+                display: inline-block;
+                background: #f1f0f0;
+                font-size: .34rem;
+                }
+          }
+          .active{
+              p{
+                  background: #f97314;
+                  color: #fff;
+                }
+            }
          
-      //   }
-      // }
-      // .detailMain3sSkuMainfrist{
-      //   padding-bottom: .2rem;
-      //   border-bottom: .03rem solid;
-      // }
-      // .detailMain3sSkuMainSec{
-      //   padding-top: .1rem;
-      // }
+        }
+      }
+      .detailMain3sSkuMainfrist{
+        padding-bottom: .2rem;
+        border-bottom: .03rem solid;
+      }
+      .detailMain3sSkuMainSec{
+        padding-top: .1rem;
+      }
       .detailMain3sSkuFoot{
   height: 1rem;
   margin-top: .5rem;
