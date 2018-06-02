@@ -16,16 +16,16 @@
             </div>
 
             <ul class="detailMoreTabTitle" v-bind="MoreTab()">
-                <li class="li1 a">人气</li>
-                <li class="li2">价格
-                    <div class="sx-arrow-up"></div>
-                    <div class="sx-arrow-down"></div>
+                <li class="li1 a" @click="orderFn('goods_salenum', false)">人气</li>
+                <li class="li2" @click="orderFn('store_price',false)">价格
+                    <!-- <div class="sx-arrow-up" @click="orderFn('store_price',false)"></div> -->
+                    <!-- <div class="sx-arrow-down" @click="orderFn('store_price',true)"></div> -->
                 </li>
-                <li class="li3">销量</li>
-                <li class="li4">时间</li>
+                <li class="li3" @click="orderFn('goods_price',false)">销量</li>
+                <li class="li4" @click="orderFn('addTime','yes')">时间</li>
             </ul>
             <ul class="detailMoreTabMain">
-                <li v-for="(data,index) in detailMoreList" :key="index">
+                <li v-for="(data,index) in List" :key="index">
                     <div class="detailMoreTabMainImg">
                         <img v-lazy="'http://www.d1sc.com/'+data.goods_main_photo.path+'/'+data.goods_main_photo.name" alt=""  @click="goto_detail(data.id)">
                     </div>
@@ -49,15 +49,24 @@ export default {
     return {
       storeId: "", //店铺id
       goodsClassId: "", //商品类别id
-      detailMoreList: "", //商品列表
+      detailMoreList: [], //商品列表
       id: "", //跳转详情页id
 
 
-      goodsPrice:'',//价格
-      salesNum:'',//销量
-      goodsClicks:'',// 人气
-      addTime:'',//添加时间
-      orderType:'desc',//“desc”或”asc”升降序
+      // goodsPrice:'',//价格
+      // salesNum:'',//销量
+      // goodsClicks:'',// 人气
+      // addTime:'',//添加时间
+      // orderType:'desc',//“desc”或”asc”升降序
+
+
+
+
+      letter:'',       //默认不排序
+      original:false   //默认从小到大排列
+
+
+
     };
   },
 
@@ -65,7 +74,40 @@ export default {
     this.ShopList();
   },
 
+  //通过计算属性过滤数据
+    computed:{
+        List: function(){
+            var _this = this;
+            var arrByZM = [];//声明一个空数组来存放数据
+            for (var i=0;i<this.detailMoreList.length;i++){
+                    arrByZM.push(this.detailMoreList[i]);
+                    console.log(this.detailMoreList[i]);
+                    //向空数组中添加数据
+            }
+            //逻辑-->升序降序排列  false: 默认从小到大  true：默认从大到小
+            //判断，如果要letter不为空，说明要进行排序
+            if(this.letter != ''){
+                arrByZM.sort(function( a , b){
+                    if(_this.original){
+                        return b[_this.letter] - a[_this.letter];
+                    }else{
+                        return a[_this.letter] - b[_this.letter];
+                    }
+                });
+            }
+            //一定要记得返回筛选后的数据
+            return arrByZM;
+        }
+    },
+
   methods: {
+     orderFn(letter,original){
+          this.letter = letter;       //排序字段 price or sales 
+          this.original = original;   //排序方式  up or down
+      },
+
+
+
     goto_detail(id) {
       //跳转到详情页
       console.log(id);
@@ -83,11 +125,11 @@ export default {
             storeId: this.$route.params.storeId,
             goodsClassId: this.$route.params.goodsClassId,
             currentPage: 0,
-            salesNum:this.salesNum,//销量
-            addTime:this.addTime,//添加时间
-            goodsClicks:this.goodsClicks,// 人气
-            goodsPrice:this.goodsPrice,//价格
-            orderType:this.orderType,//“desc”或”asc”升降序
+            // salesNum:this.salesNum,//销量
+            // addTime:this.addTime,//添加时间
+            // goodsClicks:this.goodsClicks,// 人气
+            // goodsPrice:this.goodsPrice,//价格
+            // orderType:this.orderType,//“desc”或”asc”升降序
           })
         )
         .then(res => {

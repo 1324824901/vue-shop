@@ -11,14 +11,14 @@
 
      <div class="detailEvaluationMain">
         <ul class="detailEvaluationTabTitle">
-          <li>全部(0)</li>
-          <li>好评(0)</li>
-          <li>中评(0)</li>
-          <li>差评(0)</li>
+          <li>全部({{evaluation.evaluateSum}})</li>
+          <li>好评({{evaluation.praiseNum}})</li>
+          <li>中评({{evaluation.commonlyNum}})</li>
+          <li>差评({{evaluation.badNum}})</li>
         </ul>
 
 
-        <div class="detailEvaluationTabMain1">
+        <div class="detailEvaluationTabMain1" v-if="evaluation.evaluate==null">
             <div>
                 <img src="../../assets/mIcon/img_null_goods.png" alt="">
             </div>
@@ -28,7 +28,7 @@
         </div>
 
 
-        <ul class="detailEvaluationTabMain2">
+        <ul class="detailEvaluationTabMain2" v-if="evaluation.evaluate!=null">
             <li v-for="(data,index) in evaluationList" :key="index">
                 <div class="detailEvaluationTabMain2Img">
                     <img :src="'http://www.d1sc.com/'+data.user.photo.path+'/'+data.user.photo.name" alt="">
@@ -52,15 +52,36 @@ export default {
     data(){
         return{
             goodsId: "", //商品id
-            evaluationList:"",//评价列表内容
+            evaluationList:[],//评价列表内容
+            evaluation:"",
+            id:''
         }
     },
-    mounted() {
-    this.evaluation();
+    computed:{
+       
     },
-    
+    mounted() {
+    this.evaluationn();
+    this.fetchDataa();
+    },
     methods:{
-        evaluation(){
+        fetchDataa() {
+      axios
+        .post(
+          "http://www.d1sc.com/api_goods_detail.htm",
+          qs.stringify({
+            id: this.$route.params.id
+          })
+        )
+        .then(res => {
+          console.log(res);
+          this.evaluation = res.data.result.appEvaluateData; //评价
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+        evaluationn(){
             axios
             .post(
             "http://www.d1sc.com/appGetGoodsEvaluates.htm",
@@ -76,7 +97,7 @@ export default {
             console.log(error);
             });
         },
-    }
+    },
 };
 </script>
 
@@ -100,7 +121,6 @@ export default {
     }
   }
   .detailEvaluationTabMain1 {
-    display: none;
     width: 100%;
     text-align: center;
     div {

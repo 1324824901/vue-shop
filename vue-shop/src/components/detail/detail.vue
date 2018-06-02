@@ -136,35 +136,18 @@
               <!-- 主体二维数组 -->
             <div class="detailMain3sSkuMain">
               <div class="aaax">
-                <!-- <div class="detailMain3sSkuMain1 detailMain3sSkuMainfrist">
-                  <h5>{{specifiList[0]}}</h5>
-                  <ul>
-                    <li class="li1" v-for="(Lists,index) in specifiListt" :key="index" ><p v-bind="handleNormalClickFrist()">{{Lists}}</p></li>
+                  <ul class="aaaxUl" v-for="(data,index) in specNameList" :key="index">
+                  <div>{{data}}</div>
+                  <li>
+                    <p v-for="(dataa,indexx) in specProp[index]" :key="indexx">{{dataa}}</p>
+                  </li>
                   </ul>
-                </div>
-                <div class="detailMain3sSkuMain1 detailMain3sSkuMainSec">
-                <h5>{{specifiList[1]}}</h5>
-                <ul>
-                  <li class="li2" v-for="(Listss,index) in specifiListtt" :key="index"><p v-bind="handleNormalClick()">{{Listss}}</p></li>
-                </ul>
-              </div> -->
-              <!--<div class="sku">
-                <ul class="skuUl">
-                  <li class="skuLi" v-for="(Lists,index) in specNameList" :key="index">
-                  <div class="skuDiv" v-for="(Listss,index) in specProp" :key="index">
-                      <li class="skuLi1" v-for="(Listsss,index) in Listss" :key="index">
-                        {{Listsss}}
-                      </li>
-                    </div>
-                  </li>标题
-                </ul>
-              </div>-->
             <!--底部 -->
               <div class="detailMain3sSkuFoot">
                 <h3 class="detailMain3s_selection1H aH">数量</h3>
                 <div class="count aH">
                   <span class="count-btn reduce" @click="detailSign()">-</span>
-                  <input class="count-btn countNumber" value="0" readonly="readonly"/>
+                  <input class="count-btn countNumber" value="1" readonly="readonly"/>
                   <span class="count-btn add"  @click="detailPlus()">+</span>
                 </div>
               </div>
@@ -176,11 +159,11 @@
           <!-- ============================== -->
           <div class="detailMain4">
               <span class="detailMain3s_selectionSpan">商品评价({{evaluation.evaluateSum}})</span>
-              <span class="detailMain3s_selectionSpan1" v-show="evaluation.evaluate"  @click="goto_evaluation(titlePriceSales.id)">查看评价</span>
+               <span class="detailMain3s_selectionSpan1" v-show="evaluation.evaluate"  @click="goto_evaluation(titlePriceSales.id)">查看评价</span>
               <span class="detailMain3s_selectionSpan2"><img src="../../assets/mIcon/title_back_normal.png" alt=""></span>
           </div>
 
-          <div class="detailMain5 aaasss" v-show="evaluation.evaluate">
+         <div class="detailMain5 aaasss" v-show="evaluation.evaluate">
             <div class="detailMain5Span">
               <span>好评({{evaluation.praiseNum}})</span>
               <span>中评({{evaluation.commonlyNum}})</span>
@@ -201,7 +184,7 @@
                   </div>
                   <div class="detailMain6HeP">
                       <p>{{Merchants.userName}}</p>
-                      <p>已缴纳保证金{{depositt.deposit}}元</p>
+                      <p>已缴纳保证金{{evaluation.deposit}}元</p>
                   </div>
                   <button class="detailMainBtn" @click="goto_detailShop(detailShopId.id)">进店逛逛</button>
               </div>
@@ -231,18 +214,21 @@
             <span class="specification"  @click="selectionSpecificationShow()">立即购买</span>
         </div>
       </div>
-          <iframe  id="ifr" :src="'http://www.d1sc.com/api_goods_detail_view.htm?'+webViewImg" style="margin: 0;padding: 0;height: 15rem; width: 100% !important; border:0;">
+          <iframe  id="myrame" :src="'http://www.d1sc.com/api_goods_detail_view.htm?'+webViewImg" style="margin: 0;padding: 0;height: 15rem; width: 100% !important; border:0;">
           </iframe>
   </div>
   
 </template>
 
 <script>
-// window.onload = function(){
-//   var test = document.getElementById('ifr');
-//   console.log(test);
-// 　test.style.width = "100%";
-// }
+var iframe = document.getElementById("iframe1");
+ var iwindow = iframe.contentWindow;
+ var idoc = iwindow.document;
+console.log("window",iwindow);//获取iframe的window对象
+console.log("document",idoc);  //获取iframe的document
+console.log("html",idoc.documentElement);//获取iframe的html
+console.log("head",idoc.head);  //获取head
+console.log("body",idoc.body);  //获取body
 import axios from "axios";
 import qs from "qs";
 export default {
@@ -252,7 +238,6 @@ export default {
       detailLbtImga: "", //规格图片
       titlePriceSales: "", //标题，价格，销量
       evaluation: "", //评价
-      depositt: "", //保证金
       Merchants: "", //商家用户名
       serving: "", //服务
       id: "", //详情页取到本身的id
@@ -264,13 +249,6 @@ export default {
 
       specNameList: [], //选择规格标题
       specProp: [],//规格内容
-
-
-
-      // //选择规格逻辑
-      // selectArr:[],//存放被选中的值
-      // shopItemInfo:{},//存放要和选中的值进行匹配的数据
-      // subIndex:[],
     };
   },
   mounted() {
@@ -279,27 +257,32 @@ export default {
     this.clickHead();
     this.detailSku();
   },
-
+  // computed:{
+  //     List:function(){
+  //           var arrByZM = [];//声明一个空数组来存放数据
+  //           for (var i=0;i<this.specNameList.length;i++){
+  //             arrByZM.push(this.specNameList[i]);
+  //             console.log(this.specNameList[i]);
+  //             //向空数组中添加数据
+  //           }
+  //           //一定要记得返回筛选后的数据
+  //           return arrByZM;
+  //     },
+  //      Listt:function(){
+  //           var arrByZMM = [];
+  //           for (var j=0;j<this.specProp.length;j++){
+  //               arrByZMM.push(this.specProp[j]);
+  //               console.log(this.specProp[j]);
+  //           }
+  //           return arrByZMM;
+  //     },
+  // },
   methods: {
       //选则规格逻辑
 			// /**
 			//  * 正常属性点击
 			//  */
-			// handleNormalClickFrist() {
-      //   $(".li1").click(function() {
-      //     $(".li1").removeClass("active");
-      //     $(this).addClass("active");
-      //     return false;
-      //   });
-      // },
-      // 	handleNormalClick() {
-      //   $(".li2").click(function() {
-      //     $(".li2").removeClass("active");
-      //     $(this).addClass("active");
-      //     return false;
-      //   });
-      // },
-      
+			
         // 加减
         detailPlus(){
             var add = $(".add").siblings(".countNumber");
@@ -346,8 +329,7 @@ export default {
           this.detailLbtImg = res.data.result.goods_photos; //轮播
           this.detailLbtImga = res.data.result.goods_photos[0]; //规格图片
           this.titlePriceSales = res.data.result; //标题，价格，销量
-          this.evaluation = res.data.result.appEvaluateDate; //评价
-          this.depositt = res.data.result.appEvaluateDate; //保证金
+          this.evaluation = res.data.result.appEvaluateDate; //评价appEvaluateDate
           this.Merchants = res.data.result.goods_store.user; //商家用户名
           this.detailShopId = res.data.result.goods_store; //商家用户名
           this.serving = res.data.result.storeScoreEntity; //物流和卖家服务
@@ -916,47 +898,6 @@ export default {
       .aaax{
         height: 7rem;
         overflow: auto;
-      .detailMain3sSkuMain1{
-        width: 9.8rem;
-        font-size: .24rem;
-        h5{
-          padding-bottom: .2rem;
-        }
-        ul{
-              display: flex;
-              -webkit-justify-content: space-between;
-              justify-content: space-around;
-              flex-wrap:wrap;//自动换行
-              justify-content:flex-start;//主轴对齐方式
-              align-content:flex-start;
-          li{
-                flex-basis:33%;
-                text-align: center;
-                margin: .2rem 0;
-                p{
-                padding: .2rem;
-                border-radius: .2rem;
-                display: inline-block;
-                background: #f1f0f0;
-                font-size: .34rem;
-                }
-          }
-          .active{
-              p{
-                  background: #f97314;
-                  color: #fff;
-                }
-            }
-         
-        }
-      }
-      .detailMain3sSkuMainfrist{
-        padding-bottom: .2rem;
-        border-bottom: .03rem solid;
-      }
-      .detailMain3sSkuMainSec{
-        padding-top: .1rem;
-      }
       .detailMain3sSkuFoot{
   height: 1rem;
   margin-top: .5rem;

@@ -30,6 +30,7 @@ const detailEvaluation = resolve => require(['@/components/detail/detailEvaluati
 const sku = resolve => require(['@/components/aaaaaaa/sku.vue'], resolve);
 const load = resolve => require(['@/components/public/load.vue'], resolve);
 const searchh = resolve => require(['@/components/public/searchh.vue'], resolve);
+const inter = resolve => require(['@/components/public/inter.vue'], resolve);
 
 
 Vue.use(Router);
@@ -58,6 +59,11 @@ export default new Router({
       path: "/searchh",
       name: "searchh",
       component: searchh
+    },
+    {
+      path: "/inter",
+      name: "inter",
+      component: inter
     },
 
 

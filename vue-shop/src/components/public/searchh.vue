@@ -1,9 +1,9 @@
 <template>
   <div id="box">
-            <div class="search">
+            <!-- <div class="search">
                 <input type="text" class="searchBox" v-model="searchVal">
                 <button class="btn">搜 索</button>
-            </div>
+            </div> -->
             <table class="goodsheet">
                 <tr>
                     <th>商品名</th>
@@ -43,7 +43,7 @@ export default {
             {name:"OPPOR11",price:3000,sales:1.2},
             {name:"vivoX20",price:3250,sales:2.9}
         ],
-            searchVal:'',    //默认输入为空
+            // searchVal:'',    //默认输入为空
             letter:'',       //默认不排序
             original:false   //默认从小到大排列
         }
@@ -63,11 +63,11 @@ export default {
                         var arrByZM = [];//声明一个空数组来存放数据
                         for (var i=0;i<this.goodsList.length;i++){
                             //for循环数据中的每一项（根据name值）
-                            if(this.goodsList[i].name.search(this.searchVal) != -1){
+                            // if(this.goodsList[i].name.search(this.searchVal) != -1){
                                 //判断输入框中的值是否可以匹配到数据，如果匹配成功
                                 arrByZM.push(this.goodsList[i]);
                                 //向空数组中添加数据
-                            }
+                            // }
                         }
                         //逻辑-->升序降序排列  false: 默认从小到大  true：默认从大到小
                         //判断，如果要letter不为空，说明要进行排序

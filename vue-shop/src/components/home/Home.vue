@@ -347,7 +347,7 @@ export default {
     
   },
   updated() {
-    //只要数据变化就会判断一次数据是否已读过，判断标记的显隐
+    //只要数据变化就会判断一次数据是否已读过，判断标记的显隐    
   },
   created(){
     //打开页面首先自动获取一次数据
@@ -367,7 +367,6 @@ export default {
 </script>
 <style lang="scss">
 @import "../../../static/style/css/home.css";
-
 .scroll {
   position: fixed;
   bottom: 2rem;

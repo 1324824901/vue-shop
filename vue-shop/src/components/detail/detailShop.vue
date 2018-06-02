@@ -18,7 +18,7 @@
 
             <div class="detailShopHead2" v-if="ShopCaution">
                 <div class="detailShopHead2Img">
-                    <img :src="'http://www.d1sc.com/'+ShopCaution.user.photo.path+'/'+ShopCaution.user.photo.name" alt="" v-if="ShopCaution.user!=null||ShopCaution.user.photo!=null"/>
+                    <img :src="'http://www.d1sc.com/'+ShopCaution.user.photo.path+'/'+ShopCaution.user.photo.name" alt="" v-if="ShopCaution.user.photo!=null"/>
                     <img src="../../assets/mIcon/icon_yonghu.png" alt="" v-if="ShopCaution.user.photo==null||ShopCaution.user==null"/>
                 </div>
                 <h3>{{ShopCaution.store.store_name}}</h3>
@@ -155,7 +155,7 @@ export default {
     personalMall() {
       axios
         .post(
-          "http://www.d1sc.com/getStoreHomePage.htm",
+          "http://www.d1sc.com/getStoreHomePage.htm",  
           qs.stringify({
             storeId: this.$route.params.storeId,
             currentPage:this.currentPage,
