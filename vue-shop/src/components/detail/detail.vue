@@ -7,11 +7,11 @@
         </div>
       </div>
 
-      <div class="detailHead_right detailHeadImg">
+      <!-- <div class="detailHead_right detailHeadImg">
         <div class="detailHead_left_right_img">
           <img src="../../assets/mIcon/title_back_white.png" alt="" id="img222">
         </div>
-      </div>
+      </div> -->
 
     <div class="detailHead">
         <ul class="detailHead_text">
@@ -139,7 +139,10 @@
                   <ul class="aaaxUl" v-for="(data,index) in specNameList" :key="index">
                   <div>{{data}}</div>
                   <li>
-                    <p v-for="(dataa,indexx) in specProp[index]" :key="indexx">{{dataa}}</p>
+                    <p v-for="(dataa,indexx) in specProp[index]" :key="indexx"
+                      :class="{disabled: item.state === 2, active: item.state === 1}"
+                      @click="colorItemClick(item)"                      
+                    >{{dataa}}</p>
                   </li>
                   </ul>
             <!--底部 -->
@@ -163,7 +166,7 @@
               <span class="detailMain3s_selectionSpan2"><img src="../../assets/mIcon/title_back_normal.png" alt=""></span>
           </div>
 
-         <div class="detailMain5 aaasss" v-show="evaluation.evaluate">
+         <div class="detailMain5" v-show="evaluation.evaluate">
             <div class="detailMain5Span">
               <span>好评({{evaluation.praiseNum}})</span>
               <span>中评({{evaluation.commonlyNum}})</span>
@@ -177,7 +180,7 @@
             </div>
             <p class="detailMain5P" v-if="evaluation.evaluate">{{evaluation.evaluate.assessingDiscourse.assessingCharacter}}</p>
           </div>
-          <div class="detailMain6 ">
+          <div class="detailMain6 aaasss">
               <div class="detailMain6He">
                   <div class="detailMain6HeImg">
                       <img src="../../assets/mIcon/icon_bonus_list.png" alt="">
@@ -221,14 +224,14 @@
 </template>
 
 <script>
-var iframe = document.getElementById("iframe1");
- var iwindow = iframe.contentWindow;
- var idoc = iwindow.document;
-console.log("window",iwindow);//获取iframe的window对象
-console.log("document",idoc);  //获取iframe的document
-console.log("html",idoc.documentElement);//获取iframe的html
-console.log("head",idoc.head);  //获取head
-console.log("body",idoc.body);  //获取body
+// var iframe = document.getElementById("iframe1");
+//  var iwindow = iframe.contentWindow;
+//  var idoc = iwindow.document;
+// console.log("window",iwindow);//获取iframe的window对象
+// console.log("document",idoc);  //获取iframe的document
+// console.log("html",idoc.documentElement);//获取iframe的html
+// console.log("head",idoc.head);  //获取head
+// console.log("body",idoc.body);  //获取body
 import axios from "axios";
 import qs from "qs";
 export default {
@@ -392,7 +395,7 @@ export default {
           $(".detailHead_text3").removeClass("active");
           $(".detailHead_text2").removeClass("active");
           $(".detailHead_text1").addClass("active");
-        } else if ($scrolltop >= 371 && $scrolltop < 530) {
+        } else if ($scrolltop >= 371 && $scrolltop < 420) {
           $(".detailHead_text3").removeClass("active");
           $(".detailHead_text1").removeClass("active");
           $(".detailHead_text2").addClass("active");
@@ -1000,6 +1003,10 @@ export default {
       right: 0;
     }
   }
+}
+.chosse{
+  background: #f97314;
+  color: #fff;
 }
 
 </style>
